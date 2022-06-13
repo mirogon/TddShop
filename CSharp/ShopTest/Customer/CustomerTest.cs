@@ -30,5 +30,20 @@ namespace ShopTest.Customer {
 
             Assert.Equal(85, customer.Funds);
         }
+        [Fact]
+        public void Buy_ReceivesItem() {
+            Shop shop = new Shop();
+            Item i = new BlackShirt();
+            shop.AddItem(i);
+
+            Customer customer = new Customer(100);
+
+            Assert.Empty(customer.Items);
+
+            customer.Buy(shop, "Black Shirt");
+
+            Assert.Single(customer.Items);
+            Assert.Equal(i, customer.Items[0]);
+        }
     }
 }

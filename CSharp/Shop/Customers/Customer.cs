@@ -5,16 +5,23 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Shop.Customers {
+    using Items;
     public class Customer {
-        int funds = 0;
+        private int funds = 0;
+        private List<Item> items = new List<Item>();
         public Customer(int funds) {
             this.funds = funds;
         }
         public int Funds {
             get { return funds; }
         }
+        public List<Item> Items {
+            get { return items; }
+        }
+
         public void Buy(Shop shop, string item) {
-            shop.Buy(item, ref funds);
+            Item purchasedItem = shop.Buy(item, ref funds);
+            items.Add(purchasedItem);
         }
     }
 }

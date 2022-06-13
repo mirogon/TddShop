@@ -9,6 +9,7 @@ namespace Shop {
 
     public class Shop {
         private List<Item> items = new List<Item>();
+        private List<Item> soldItems = new List<Item>();
         private int revenue = 0;
         public List<Item> Items {
             get { return items; }
@@ -22,21 +23,30 @@ namespace Shop {
         public Item Buy(string item, ref int funds) {
             for (int i = 0; i < items.Count; i++) {
                 if (items[i].Name == item) {
-                    if (items[i].Value > funds) {
+                    Item currentItem = items[i];
+                    if (currentItem.Value > funds) {
                         throw new NotEnoughFundsException();
                     }
-                    funds -= items[i].Value;
-                    revenue += items[i].Value;
-                    Item r = items[i];
+
+                    funds -= currentItem.Value;
+                    revenue += currentItem.Value;
+
+                    soldItems.Add(currentItem);
                     items.RemoveAt(i);
-                    return r;
+                    return currentItem;
                 }
             }
             throw new ItemNotAvailableException();
         }
-        public void Return(Item i) {
-            AddItem(i);
-            revenue -= i.Value;
+        public void Return(Item item) {
+            for (int i = 0; i < soldItems.Count; i++) {
+                if (soldItems[i] == item) {
+                    AddItem(item);
+                    revenue -= item.Value;
+                    return;
+                }
+            }
+            throw new Exception();
         }
     }
 

@@ -103,5 +103,28 @@ namespace ShopTest {
             Assert.Single(shop.Items);
             Assert.Equal(0, shop.Revenue);
         }
+        [Fact]
+        public void Return_WhenBoughtBefore_Works() {
+            Shop shop = new Shop();
+            Item i = new BlackShirt();
+
+            shop.AddItem(i);
+
+            int funds = 1000;
+            Item boughtItem = shop.Buy("Black Shirt", ref funds);
+            shop.Return(boughtItem);
+        }
+        [Fact]
+        public void Return_WhenNotBoughtBefore_Throws() {
+            Shop shop = new Shop();
+            Item i = new BlackShirt();
+
+            shop.AddItem(i);
+
+            Assert.ThrowsAny<Exception>(() => {
+                shop.Return(i);
+            });
+        }
+
     }
 }
