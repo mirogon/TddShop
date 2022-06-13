@@ -23,5 +23,10 @@ namespace Shop.Customers {
             Item purchasedItem = shop.Buy(item, ref funds);
             items.Add(purchasedItem);
         }
+        public void Return(Shop shop, Item item) {
+            shop.Return(item);
+            items.Remove(item);
+            funds += item.Value;
+        }
     }
 }

@@ -27,16 +27,17 @@ namespace Shop {
                     if (currentItem.Value > funds) {
                         throw new NotEnoughFundsException();
                     }
-
-                    funds -= currentItem.Value;
-                    revenue += currentItem.Value;
-
-                    soldItems.Add(currentItem);
-                    items.RemoveAt(i);
+                    SoldItem(currentItem, ref funds);
                     return currentItem;
                 }
             }
             throw new ItemNotAvailableException();
+        }
+        private void SoldItem(Item i, ref int funds) {
+            funds -= i.Value;
+            revenue += i.Value;
+            soldItems.Add(i);
+            items.Remove(i);
         }
         public void Return(Item item) {
             for (int i = 0; i < soldItems.Count; i++) {
@@ -46,7 +47,7 @@ namespace Shop {
                     return;
                 }
             }
-            throw new Exception();
+            throw new CannotReturnException();
         }
     }
 
@@ -58,4 +59,9 @@ namespace Shop {
         public ItemNotAvailableException() : base("Item not available!"){
         }
     }
+    public class CannotReturnException : Exception{
+        public CannotReturnException() : base("Item was never bought!"){
+        }
+    }
+
 }

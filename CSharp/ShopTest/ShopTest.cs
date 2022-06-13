@@ -121,7 +121,7 @@ namespace ShopTest {
 
             shop.AddItem(i);
 
-            Assert.ThrowsAny<Exception>(() => {
+            Assert.Throws<CannotReturnException>(() => {
                 shop.Return(i);
             });
         }
