@@ -5,7 +5,11 @@ Shop System
 	- Shop has items
 	- Customer has money
 	- Customer can buy items
+		- if the shop has it
+		- if the customer has the funds
+		- customer has item afterwards
 	- Customer can return items
+		- only when it was bought in the first place
 
 C#
 

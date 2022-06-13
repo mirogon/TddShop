@@ -19,7 +19,7 @@ namespace Shop {
         public void AddItem(Item i) {
             items.Add(i);
         }
-        public void Buy(string item, ref int funds) {
+        public Item Buy(string item, ref int funds) {
             for (int i = 0; i < items.Count; i++) {
                 if (items[i].Name == item) {
                     if (items[i].Value > funds) {
@@ -27,11 +27,16 @@ namespace Shop {
                     }
                     funds -= items[i].Value;
                     revenue += items[i].Value;
+                    Item r = items[i];
                     items.RemoveAt(i);
-                    return;
+                    return r;
                 }
             }
             throw new ItemNotAvailableException();
+        }
+        public void Return(Item i) {
+            AddItem(i);
+            revenue -= i.Value;
         }
     }
 

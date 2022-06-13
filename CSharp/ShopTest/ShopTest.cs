@@ -84,5 +84,24 @@ namespace ShopTest {
 
             Assert.Equal(item.Value + item2.Value, shop.Revenue);
         }
+        [Fact]
+        public void Return_ReturnsItemAndRevenue() {
+            Shop shop = new Shop();
+            Item i = new BlackShirt();
+
+            shop.AddItem(i);
+
+            Assert.Single(shop.Items);
+
+            int funds = 1000;
+            Item boughtItem = shop.Buy("Black Shirt", ref funds);
+            Assert.Empty(shop.Items);
+            Assert.Equal(i.Value, shop.Revenue);
+
+            shop.Return(boughtItem);
+
+            Assert.Single(shop.Items);
+            Assert.Equal(0, shop.Revenue);
+        }
     }
 }
