@@ -1,0 +1,14 @@
+Use TDD as workflow
+
+Shop System
+
+	- Shop has items
+	- Customer has money
+	- Customer can buy items
+	- Customer can return items
+
+C#
+
+1. Create new Project in Visual Studio
+2. Create another Project in the same workspace for testing
+3. Reference Project in Test Project
