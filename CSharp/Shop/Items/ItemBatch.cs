@@ -17,6 +17,7 @@ namespace Shop.Items {
         }
         public int Stock {
             get { return stock; }
+            set { stock = value; }
         }
     }
 }

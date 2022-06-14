@@ -23,7 +23,8 @@ namespace ShopTest.Customer {
         public void Buy_FromShop_LowersFunds() {
             Shop shop = new Shop();
             Item i = new Item("Black Shirt", 15);
-            shop.AddItem(i);
+            ItemBatch b = new ItemBatch(i, 1);
+            shop.Add(b);
 
             Customer customer = new Customer(100);
             customer.Buy(shop, "Black Shirt");
@@ -34,7 +35,8 @@ namespace ShopTest.Customer {
         public void Buy_ReceivesItem() {
             Shop shop = new Shop();
             Item i = new Item("Black Shirt", 15);
-            shop.AddItem(i);
+            ItemBatch batch = new ItemBatch(i, 1);
+            shop.Add(batch);
 
             Customer customer = new Customer(100);
 
@@ -49,7 +51,8 @@ namespace ShopTest.Customer {
         public void Return_ReturnsItem() {
             Shop shop = new Shop();
             Item i = new Item("Black Shirt", 15);
-            shop.AddItem(i);
+            ItemBatch batch = new ItemBatch(i, 1);
+            shop.Add(batch);
 
             Customer customer = new Customer(100);
 
