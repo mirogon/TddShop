@@ -22,7 +22,7 @@ namespace ShopTest.Customer {
         [Fact]
         public void Buy_FromShop_LowersFunds() {
             Shop shop = new Shop();
-            ItemOld i = new BlackShirt();
+            Item i = new Item("Black Shirt", 15);
             shop.AddItem(i);
 
             Customer customer = new Customer(100);
@@ -33,12 +33,12 @@ namespace ShopTest.Customer {
         [Fact]
         public void Buy_ReceivesItem() {
             Shop shop = new Shop();
-            ItemOld i = new BlackShirt();
+            Item i = new Item("Black Shirt", 15);
             shop.AddItem(i);
 
             Customer customer = new Customer(100);
 
-            Assert.Empty(customer.Items);
+            Assert.Empty(customer.ItemsOld);
 
             customer.Buy(shop, "Black Shirt");
 
@@ -48,7 +48,7 @@ namespace ShopTest.Customer {
         [Fact]
         public void Return_ReturnsItem() {
             Shop shop = new Shop();
-            ItemOld i = new BlackShirt();
+            Item i = new Item("Black Shirt", 15);
             shop.AddItem(i);
 
             Customer customer = new Customer(100);
