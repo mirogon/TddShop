@@ -8,7 +8,7 @@ using Xunit;
 namespace ShopTest.Items {
     using Shop.Items;
     public class NullItemTest {
-        Item item;
+        ItemOld item;
         public NullItemTest() {
             item = new NullItem();
         }

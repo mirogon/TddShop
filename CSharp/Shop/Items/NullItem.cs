@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace Shop.Items {
-    public class NullItem : Item{
+    public class NullItem : ItemOld{
         public string Name {
             get { return ""; }
         }

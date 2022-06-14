@@ -10,8 +10,8 @@ namespace ShopTest {
 
             Assert.Empty(shop.Items);
 
-            Item item = new NullItem();
-            shop.AddItem(item);
+            Item i = new Item("Black Shirt", 15);
+            shop.AddItem(i);
 
             Assert.Single(shop.Items);
         }
@@ -23,7 +23,7 @@ namespace ShopTest {
         [Fact]
         public void Buy_ReducesFunds() {
             Shop shop = new Shop();
-            Item item = new BlackShirt();
+            ItemOld item = new BlackShirt();
             shop.AddItem(item);
 
             int funds = 100;
@@ -34,7 +34,7 @@ namespace ShopTest {
         [Fact]
         public void Buy_NotEnoughFunds_Throws() {
             Shop shop = new Shop();
-            Item item = new BlackShirt();
+            ItemOld item = new BlackShirt();
             shop.AddItem(item);
 
             int funds = 10;
@@ -54,21 +54,21 @@ namespace ShopTest {
         [Fact]
         public void Item_AfterBuying_IsGoneFromTheShop() {
             Shop shop = new Shop();
-            Item i = new YellowShoes();
+            ItemOld i = new YellowShoes();
             shop.AddItem(i);
 
-            Assert.Single(shop.Items);
+            Assert.Single(shop.ItemsOld);
 
             int funds = 100;
             shop.Buy("Yellow Shoes", ref funds);
 
-            Assert.Empty(shop.Items);
+            Assert.Empty(shop.ItemsOld);
         }
         [Fact]
         public void Revenue_AfterPurchase_Correct() {
             Shop shop = new Shop();
-            Item item = new BlackShirt();
-            Item item2 = new YellowShoes();
+            ItemOld item = new BlackShirt();
+            ItemOld item2 = new YellowShoes();
 
             shop.AddItem(item);
             shop.AddItem(item2);
@@ -87,37 +87,37 @@ namespace ShopTest {
         [Fact]
         public void Return_ReturnsItemAndRevenue() {
             Shop shop = new Shop();
-            Item i = new BlackShirt();
+            ItemOld i = new BlackShirt();
 
             shop.AddItem(i);
 
-            Assert.Single(shop.Items);
+            Assert.Single(shop.ItemsOld);
 
             int funds = 1000;
-            Item boughtItem = shop.Buy("Black Shirt", ref funds);
-            Assert.Empty(shop.Items);
+            ItemOld boughtItem = shop.Buy("Black Shirt", ref funds);
+            Assert.Empty(shop.ItemsOld);
             Assert.Equal(i.Value, shop.Revenue);
 
             shop.Return(boughtItem);
 
-            Assert.Single(shop.Items);
+            Assert.Single(shop.ItemsOld);
             Assert.Equal(0, shop.Revenue);
         }
         [Fact]
         public void Return_WhenBoughtBefore_Works() {
             Shop shop = new Shop();
-            Item i = new BlackShirt();
+            ItemOld i = new BlackShirt();
 
             shop.AddItem(i);
 
             int funds = 1000;
-            Item boughtItem = shop.Buy("Black Shirt", ref funds);
+            ItemOld boughtItem = shop.Buy("Black Shirt", ref funds);
             shop.Return(boughtItem);
         }
         [Fact]
         public void Return_WhenNotBoughtBefore_Throws() {
             Shop shop = new Shop();
-            Item i = new BlackShirt();
+            ItemOld i = new BlackShirt();
 
             shop.AddItem(i);
 
@@ -125,6 +125,5 @@ namespace ShopTest {
                 shop.Return(i);
             });
         }
-
     }
 }

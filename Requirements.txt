@@ -1,8 +1,7 @@
-Use TDD as workflow
-
 Shop System
 
 	- Shop has items
+		- X amount of X item that reduces (x amount reduced by 1  after purchase)
 	- Customer has money
 	- Customer can buy items
 		- if the shop has it
