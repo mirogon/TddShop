@@ -20,7 +20,16 @@ namespace Shop {
             get { return revenue; }
         }
         public void Add(ItemBatch batch) {
-            items.Add(batch);
+            bool found = false;
+            for(int i = 0; i < items.Count; ++i) {
+                if (items[i].Item == batch.Item) {
+                    items[i].Stock += batch.Stock;
+                    found = true;
+                }
+            }
+            if (!found) {
+                items.Add(batch);
+            }
         }
         public Item Buy(string item, ref int funds) {
             for(int i = 0; i < items.Count; ++i) {
@@ -29,55 +38,63 @@ namespace Shop {
                     if(currentItem.Value > funds) {
                         throw new NotEnoughFundsException();
                     }
-                    funds -= currentItem.Value;
-                    revenue += currentItem.Value;
-
-                    //Remove Stock from items
-                    for(int j = 0; j < items.Count; ++j) {
-                        if (items[j].Item.Name == item) {
-                            items[j].Stock--;
-                        }
-                        if (items[j].Stock <= 0) {
-                            items.RemoveAt(j);
-                        }
-                    }
-                    //Add to sold
-                    bool found = false;
-                    for(int j = 0; j < soldItems.Count; ++j) {
-                        if (soldItems[j].Item.Name == item) {
-                            soldItems[j].Stock++;
-                            found = true;
-                        }
-                    }
-                    if (!found) {
-                        soldItems.Add(new ItemBatch(currentItem, 1));
-                    }
+                    SoldItem(currentItem, ref funds);
                     return currentItem;
                 }
             }
             throw new ItemNotAvailableException();
         }
+        public void SoldItem(Item item, ref int funds) {
+            funds -= item.Value;
+            revenue += item.Value;
+
+            RemoveItem(item);
+            AddSoldItem(item);
+        }
+        private void RemoveItem(Item item) {
+            for(int j = 0; j < items.Count; ++j) {
+                if (items[j].Item == item) {
+                    items[j].Stock--;
+                }
+                if (items[j].Stock <= 0) {
+                    items.RemoveAt(j);
+                }
+            }
+        }
+        private void AddSoldItem(Item item) {
+            bool found = false;
+            for(int j = 0; j < soldItems.Count; ++j) {
+                if (soldItems[j].Item == item) {
+                    soldItems[j].Stock++;
+                    found = true;
+                }
+            }
+            if (!found) {
+                soldItems.Add(new ItemBatch(item, 1));
+            }
+        }
         public void Return(Item item) {
             for(int i = 0; i < soldItems.Count; ++i) {
                 if (soldItems[i].Item == item) {
                     revenue -= item.Value;
-                    //Add item back to stock
-                    bool found = false;
-                    for(int j = 0; j < items.Count; ++j) {
-                        if (items[j].Item == item) {
-                            items[j].Stock++;
-                            found = true;
-                        }
-                    }
-                    if (!found) {
-                        items.Add(new ItemBatch(item, 1));
-                    }
-                    //Remove from soldItems
+                    AddSingleItemToStock(item);
                     soldItems.RemoveAt(i);
                     return;
                 }
             }
             throw new CannotReturnException();
+        }
+        private void AddSingleItemToStock(Item item) {
+            bool found = false;
+            for(int j = 0; j < items.Count; ++j) {
+                if (items[j].Item == item) {
+                    items[j].Stock++;
+                    found = true;
+                }
+            }
+            if (!found) {
+                items.Add(new ItemBatch(item, 1));
+            }
         }
     }
 

@@ -18,6 +18,19 @@ namespace ShopTest {
             Assert.Equal(100, shop.Items[0].Stock);
         }
         [Fact]
+        public void Add_TwoTimes_AddsStock() {
+            Shop shop = new Shop();
+            Item i = new Item("Black Shirt", 15);
+            ItemBatch b = new ItemBatch(i, 100);
+            shop.Add(b);
+
+            Assert.Equal(100, shop.Items[0].Stock);
+
+            shop.Add(b);
+
+            Assert.Equal(200, shop.Items[0].Stock);
+        }
+        [Fact]
         public void Revenue_AtBegin_Zero() {
             Shop shop = new Shop();
             Assert.Equal(0, shop.Revenue);
