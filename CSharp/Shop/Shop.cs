@@ -14,6 +14,7 @@ namespace Shop {
         
         //New
         private List<Item> items = new List<Item>();
+        private List<Item> soldItems = new List<Item>();
 
         public List<ItemOld> ItemsOld {
             get { return itemsOld; }
@@ -30,11 +31,24 @@ namespace Shop {
         public void AddItem(Item i) {
             items.Add(i);
         }
-        public ItemOld Buy(string item, ref int funds) {
+        public ItemOld BuyOld(string item, ref int funds) {
             for (int i = 0; i < itemsOld.Count; i++) {
                 if (itemsOld[i].Name == item) {
                     ItemOld currentItem = itemsOld[i];
                     if (currentItem.Value > funds) {
+                        throw new NotEnoughFundsException();
+                    }
+                    SoldItemOld(currentItem, ref funds);
+                    return currentItem;
+                }
+            }
+            throw new ItemNotAvailableException();
+        }
+        public Item Buy(string item, ref int funds) {
+            for(int i = 0; i < items.Count; ++i) {
+                if (items[i].Name == item) {
+                    Item currentItem = items[i];
+                    if(currentItem.Value > funds) {
                         throw new NotEnoughFundsException();
                     }
                     SoldItem(currentItem, ref funds);
@@ -43,13 +57,19 @@ namespace Shop {
             }
             throw new ItemNotAvailableException();
         }
-        private void SoldItem(ItemOld i, ref int funds) {
+        private void SoldItemOld(ItemOld i, ref int funds) {
             funds -= i.Value;
             revenue += i.Value;
             soldItemsOld.Add(i);
             itemsOld.Remove(i);
         }
-        public void Return(ItemOld item) {
+        private void SoldItem(Item i, ref int funds) {
+            funds -= i.Value;
+            revenue += i.Value;
+            soldItems.Add(i);
+            items.Remove(i);
+        }
+        public void ReturnOld(ItemOld item) {
             for (int i = 0; i < soldItemsOld.Count; i++) {
                 if (soldItemsOld[i] == item) {
                     AddItem(item);
@@ -59,6 +79,17 @@ namespace Shop {
             }
             throw new CannotReturnException();
         }
+        public void Return(Item item) {
+            for (int i = 0; i < soldItems.Count; i++) {
+                if (soldItems[i] == item) {
+                    AddItem(item);
+                    revenue -= item.Value;
+                    return;
+                }
+            }
+            throw new CannotReturnException();
+        }
+
     }
 
     public class NotEnoughFundsException : Exception{

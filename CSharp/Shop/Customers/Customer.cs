@@ -20,11 +20,11 @@ namespace Shop.Customers {
         }
 
         public void Buy(Shop shop, string item) {
-            ItemOld purchasedItem = shop.Buy(item, ref funds);
+            ItemOld purchasedItem = shop.BuyOld(item, ref funds);
             items.Add(purchasedItem);
         }
         public void Return(Shop shop, ItemOld item) {
-            shop.Return(item);
+            shop.ReturnOld(item);
             items.Remove(item);
             funds += item.Value;
         }
