@@ -38,7 +38,7 @@ namespace ShopTest.Customer {
 
             Customer customer = new Customer(100);
 
-            Assert.Empty(customer.ItemsOld);
+            Assert.Empty(customer.Items);
 
             customer.Buy(shop, "Black Shirt");
 
