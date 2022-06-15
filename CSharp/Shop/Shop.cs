@@ -31,6 +31,14 @@ namespace Shop {
                 items.Add(batch);
             }
         }
+        public int StockAvailable(string itemName) {
+            for(int i = 0; i < items.Count; ++i) {
+                if (items[i].Item.Name == itemName) {
+                    return items[i].Stock;
+                }
+            }
+            return 0;
+        }
         public Item Buy(string item, ref int funds) {
             for(int i = 0; i < items.Count; ++i) {
                 if (items[i].Item.Name == item) {
@@ -110,5 +118,4 @@ namespace Shop {
         public CannotReturnException() : base("Item was never bought!"){
         }
     }
-
 }

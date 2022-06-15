@@ -24,11 +24,26 @@ namespace ShopTest {
             ItemBatch b = new ItemBatch(i, 100);
             shop.Add(b);
 
-            Assert.Equal(100, shop.Items[0].Stock);
+            Assert.Single(shop.Items);
+            Assert.Equal(100, shop.StockAvailable("Black Shirt"));
 
             shop.Add(b);
 
-            Assert.Equal(200, shop.Items[0].Stock);
+            Assert.Single(shop.Items);
+            Assert.Equal(200, shop.StockAvailable("Black Shirt"));
+        }
+        [Fact]
+        public void StockAvailable_WithoutItems_Zero() {
+            Shop shop = new Shop();
+            Assert.Equal(0, shop.StockAvailable("Black Shoe"));
+        }
+        [Fact]
+        public void StockAvailable_WithItems_Works() {
+            Shop shop = new Shop();
+            ItemBatch b = new ItemBatch(new Item("Black Belt", 100), 11);
+            shop.Add(b);
+
+            Assert.Equal(11, shop.StockAvailable("Black Belt"));
         }
         [Fact]
         public void Revenue_AtBegin_Zero() {
@@ -43,13 +58,13 @@ namespace ShopTest {
 
             shop.Add(batch);
 
-            Assert.Equal(25, shop.Items[0].Stock);
+            Assert.Equal(25, shop.StockAvailable("Black Shirt"));
 
             int funds = 100;
             shop.Buy("Black Shirt", ref funds);
 
             Assert.Equal(100 - item.Value, funds);
-            Assert.Equal(24, shop.Items[0].Stock);
+            Assert.Equal(24, shop.StockAvailable("Black Shirt"));
         }
         [Fact]
         public void Buy_NotEnoughFunds_Throws() {

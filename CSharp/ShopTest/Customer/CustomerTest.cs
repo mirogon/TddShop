@@ -48,7 +48,7 @@ namespace ShopTest.Customer {
             Assert.Equal(i, customer.Items[0]);
         }
         [Fact]
-        public void Return_ReturnsItem() {
+        public void Return_ReturnsItemAndMoney() {
             Shop shop = new Shop();
             Item i = new Item("Black Shirt", 15);
             ItemBatch batch = new ItemBatch(i, 1);
