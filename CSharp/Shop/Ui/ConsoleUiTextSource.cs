@@ -9,9 +9,9 @@ namespace Shop.Ui {
     public class ConsoleUiTextSource {
         public string ConstructShopMenu(List<ItemBatch> items) {
             if(items.Count == 0) {
-                return "Shop Menu:";
+                return "Items";
             }
-            string s = "Shop Menu:\n" + "Name, Price, Stock\n";
+            string s = "Items\n\n" + "Name, Price, Stock\n";
 
             for(int i = 0; i < items.Count; ++i) {
                 s += items[i].Item.Name + " " + items[i].Item.Value + " " + items[i].Stock;
