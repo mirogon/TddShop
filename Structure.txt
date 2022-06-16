@@ -3,6 +3,8 @@ NEW!
 App doesnt have ui, Ui has App, because the Ui needs to get and set things in the app, 
 so it should be higher level than the app
 
+Or, probably even better: App is the highest level that has a Ui and ShopApp, Ui also gets the ShopApp injected
+
 Example: A new item gets added to the shop
 
 	1. Create Shop, Customer, App (App has shop and customer)
