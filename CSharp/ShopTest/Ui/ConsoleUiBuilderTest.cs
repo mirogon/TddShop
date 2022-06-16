@@ -9,7 +9,7 @@ using Xunit;
 namespace ShopTest.Ui {
     using Shop.Ui;
     using Shop.Items;
-    public class ConsoleUiTextSourceTestHelper {
+    public class ConsoleUiBuilderTestHelper {
         public static string LoadFromFile(string fileName) {
             FileStream fs = new FileStream(fileName, FileMode.Open);
             byte[] buffer = new byte[2048];
@@ -17,21 +17,21 @@ namespace ShopTest.Ui {
             return Encoding.ASCII.GetString(buffer, 0, nonNulls);
         }
     }
-    public class ConsoleUiTextSourceTest {
+    public class ConsoleUiBuilderTest {
         [Fact]
         public void ConstructShopMenu_WithoutItems() {
-            ConsoleUiTextSource textSource = new ConsoleUiTextSource();
+            ConsoleUiBuilder textSource = new ConsoleUiBuilder();
             List<ItemBatch> items = new List<ItemBatch>();
             string result = textSource.ConstructShopMenu(items);
-            Assert.Equal("Shop Menu:", result);
+            Assert.Equal("Items", result);
         }
         [Fact]
         public void ConstructShopMenu_WithItems() {
-            ConsoleUiTextSource textSource = new ConsoleUiTextSource();
+            ConsoleUiBuilder textSource = new ConsoleUiBuilder();
             List<ItemBatch> items = new List<ItemBatch>();
             items.Add(new ItemBatch(new Item("Black Shirt", 15), 110));
             string result = textSource.ConstructShopMenu(items);
-            string expected = ConsoleUiTextSourceTestHelper.LoadFromFile("ConstructShopMenu1");
+            string expected = ConsoleUiBuilderTestHelper.LoadFromFile("ConstructShopMenu1");
             Assert.Equal(expected, result);
         }
     }

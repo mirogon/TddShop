@@ -11,12 +11,12 @@ namespace ShopTest.UI {
     public class ConsoleUiTest {
         [Fact]
         public void MainMenu() {
-            ConsoleUiTextSource textSource = new ConsoleUiTextSource();
+            ConsoleUiBuilder textSource = new ConsoleUiBuilder();
             Ui ui = new ConsoleUi(textSource);
         }
         [Fact]
         public void ShopMenu() {
-            ConsoleUiTextSource textSource = new ConsoleUiTextSource();
+            ConsoleUiBuilder textSource = new ConsoleUiBuilder();
             Ui ui = new ConsoleUi(textSource);
             List<ItemBatch> items = new List<ItemBatch>();
             items.Add(new ItemBatch(new Item("Black Shirt", 15), 100));

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Shop.Ui {
     using Items;
     public class ConsoleUi : Ui{
-        public ConsoleUi(ConsoleUiTextSource textSource) {
+        public ConsoleUi(ConsoleUiBuilder textSource) {
 
         }
         public void MainMenu() {
