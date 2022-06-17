@@ -6,12 +6,17 @@ using System.Threading.Tasks;
 
 namespace Shop.Ui {
     using Items;
+    using Customers;
     public class ConsoleUiBuilder {
+        public string ConstructMainMenu() {
+            return "1 - Shop Menu\n2 - Customer Menu\n3 - Exit";
+        }
         public string ConstructShopMenu(List<ItemBatch> items) {
-            if(items.Count == 0) {
-                return "Items";
+            string s = "Items\n\n" + "Name                Price               Stock";
+
+            if (items.Count > 0) {
+                s += "\n";
             }
-            string s = "Items\n\n" + "Name                Price               Stock\n";
 
             for(int i = 0; i < items.Count; ++i) {
                 s += items[i].Item.Name;// + " " + items[i].Item.Value + " " + items[i].Stock;
@@ -25,6 +30,14 @@ namespace Shop.Ui {
                     s += " ";
                 }
                 s += items[i].Stock;
+            }
+            return s;
+        }
+        public string ConstructCustomerMenu(Customer customer) {
+            string s = "Items";
+            s += "\n\n";
+            for (int i = 0; i < customer.Items.Count; ++i) {
+                s += customer.Items[i].Name;
             }
             return s;
         }
