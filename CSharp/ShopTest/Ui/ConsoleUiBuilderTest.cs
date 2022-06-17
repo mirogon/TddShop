@@ -25,7 +25,7 @@ namespace ShopTest.Ui {
             ConsoleUiBuilder uiBuilder = new ConsoleUiBuilder();
             string actual = uiBuilder.ConstructMainMenu();
             string expected = ConsoleUiBuilderTestHelper.LoadFromFile("ConstructMainMenu");
-            Assert.Equal(actual, expected);
+            Assert.Equal(expected, actual);
         }
 
         [Fact]
@@ -71,6 +71,31 @@ namespace ShopTest.Ui {
             string actual = builder.ConstructCustomerMenu(c);
 
             Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void ConstructCustomerBuyMenu() {
+            ConsoleUiBuilder builder = new ConsoleUiBuilder();
+
+            Shop shop = new Shop();
+
+            Item item = new Item("Red Shoes", 15);
+            ItemBatch itemBatch = new ItemBatch(item, 1);
+            shop.Add(itemBatch);
+
+            string expected = ConsoleUiBuilderTestHelper.LoadFromFile("ConstructCustomerBuyMenu");
+            string actual = builder.ConstructCustomerBuyMenu(shop.Items);
+            Assert.Equal(expected, actual);
+        }
+        [Fact]
+        public void ConstructCustomerBuyMenuWithoutItems() {
+            ConsoleUiBuilder builder = new ConsoleUiBuilder();
+
+            Shop shop = new Shop();
+
+            string expected = ConsoleUiBuilderTestHelper.LoadFromFile("ConstructCustomerBuyMenuWithoutItems");
+            string actual = builder.ConstructCustomerBuyMenu(shop.Items);
+            Assert.Equal(expected, actual);
+
         }
 
     }

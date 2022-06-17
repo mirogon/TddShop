@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Xunit;
 
-namespace ShopTest.UI {
+namespace ShopTest.Ui {
     using Shop.Ui;
     using Shop.Items;
     public class ConsoleUiTest {

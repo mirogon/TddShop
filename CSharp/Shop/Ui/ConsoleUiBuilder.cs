@@ -39,6 +39,29 @@ namespace Shop.Ui {
             for (int i = 0; i < customer.Items.Count; ++i) {
                 s += customer.Items[i].Name;
             }
+            s += "\n\n";
+            s += "1 - Buy Item\n";
+            s += "2 - Refund Item";
+            return s;
+        }
+        public string ConstructCustomerBuyMenu(List<ItemBatch> shopItems) {
+            string s = "Shop Items\n\n";
+            s += "Name                Price               Stock\n";
+            for(int i = 0; i < shopItems.Count; ++i) {
+                s += shopItems[i].Item.Name;
+                int spaces = 20 - shopItems[i].Item.Name.Length;
+                for(int j = 0; j < spaces; ++j) {
+                    s += " ";
+                }
+                s += shopItems[i].Item.Value;
+                spaces = 20 - shopItems[i].Item.Value.ToString().Length;
+                for(int j = 0; j < spaces; ++j) {
+                    s += " ";
+                }
+                s += shopItems[i].Stock;
+                s += "\n";
+            }
+            s += "\nBuy Item: ";
             return s;
         }
     }
