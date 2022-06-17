@@ -64,5 +64,21 @@ namespace Shop.Ui {
             s += "\nBuy Item: ";
             return s;
         }
+        public string ConstructCustomerRefundMenu(List<Item> customerItems) {
+            string s = "Items\n\n";
+            s += "Name                Value\n";
+            for(int i = 0; i < customerItems.Count; ++i) {
+                s += customerItems[i].Name;
+                int spaces = 20 - customerItems[i].Name.Length;
+                for(int j = 0; j < spaces; ++j) {
+                    s += " ";
+                }
+                s += customerItems[i].Value;
+                s += "\n";
+            }
+            s += "\nRefund Item: ";
+            return s;
+
+        }
     }
 }
