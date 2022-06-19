@@ -19,7 +19,7 @@ namespace Shop.Ui {
             }
 
             for(int i = 0; i < items.Count; ++i) {
-                s += items[i].Item.Name;// + " " + items[i].Item.Value + " " + items[i].Stock;
+                s += items[i].Item.Name;
                 int spaces = 20 - items[i].Item.Name.Length;
                 for(int j = 0; j < spaces; ++j) {
                     s += " ";

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace Shop.Ui {
     using Items;
+    using Customers;
     public class ConsoleUi : Ui{
         TextUiBuilder textUiBuilder;
         ConsoleInput consoleInput;
@@ -14,10 +15,19 @@ namespace Shop.Ui {
             this.consoleInput = consoleInput;
         }
         public void MainMenu() {
-            string m = textUiBuilder.ConstructMainMenu();
+            string mainMenuText = textUiBuilder.ConstructMainMenu();
+            Console.WriteLine(mainMenuText);
             string input = consoleInput.ReadLine();
         }
         public void ShopMenu(List<ItemBatch> items) {
+            string shopMenuText = textUiBuilder.ConstructShopMenu(items);
+            Console.Write(shopMenuText);
+            string i = consoleInput.ReadLine();
+        }
+        public void CustomerMenu(Customer c) {
+            string menuText = textUiBuilder.ConstructCustomerMenu(c);
+            Console.Write(menuText);
+            var input = consoleInput.ReadLine();
         }
     }
 }
