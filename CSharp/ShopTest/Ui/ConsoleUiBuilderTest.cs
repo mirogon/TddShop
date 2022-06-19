@@ -113,6 +113,21 @@ namespace ShopTest.Ui {
 
             Assert.Equal(expected, actual);
         }
+        [Fact]
+        public void ConstructCustomerRefundMenu_WithoutItems() {
+            ConsoleUiBuilder builder = new ConsoleUiBuilder();
+            
+            Customer c = new Customer(1000);
+
+            Shop shop = new Shop();
+            Item item = new Item("Blue Pants", 60);
+            shop.Add(new ItemBatch(item, 1));
+
+            string expected = ConsoleUiBuilderTestHelper.LoadFromFile("TestData/ConstructCustomerRefundMenuWithoutItems");
+            string actual = builder.ConstructCustomerRefundMenu(c.Items);
+
+            Assert.Equal(expected, actual);
+        }
 
     }
 }
