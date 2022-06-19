@@ -7,16 +7,17 @@ using System.Threading.Tasks;
 namespace Shop.Ui {
     using Items;
     public class ConsoleUi : Ui{
-        public ConsoleUi(ConsoleUiBuilder textSource) {
-
+        TextUiBuilder textUiBuilder;
+        ConsoleInput consoleInput;
+        public ConsoleUi(TextUiBuilder textUiBuilder, ConsoleInput consoleInput) {
+            this.textUiBuilder = textUiBuilder;
+            this.consoleInput = consoleInput;
         }
         public void MainMenu() {
-            Console.WriteLine("1 - Shop");
-            Console.WriteLine("1 - Customer");
-            string input = Console.ReadLine();
+            string m = textUiBuilder.ConstructMainMenu();
+            string input = consoleInput.ReadLine();
         }
         public void ShopMenu(List<ItemBatch> items) {
-            
         }
     }
 }

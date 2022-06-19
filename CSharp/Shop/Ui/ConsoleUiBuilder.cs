@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Shop.Ui {
     using Items;
     using Customers;
-    public class ConsoleUiBuilder {
+    public class ConsoleUiBuilder : TextUiBuilder{
         public string ConstructMainMenu() {
             return "1 - Shop Menu\n2 - Customer Menu\n3 - Exit";
         }
