@@ -29,5 +29,10 @@ namespace Shop.Ui {
             Console.Write(menuText);
             var input = consoleInput.ReadLine();
         }
+        public void CustomerBuyMenu(List<ItemBatch> items) {
+            string menuText = textUiBuilder.ConstructCustomerBuyMenu(items);
+            Console.Write(menuText);
+            consoleInput.ReadLine();
+        }
     }
 }

@@ -11,5 +11,6 @@ namespace Shop.Ui {
         public string ConstructMainMenu();
         public string ConstructShopMenu(List<ItemBatch> items);
         public string ConstructCustomerMenu(Customer c);
+        public string ConstructCustomerBuyMenu(List<ItemBatch> shopItems);
     }
 }
