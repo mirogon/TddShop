@@ -1,1 +1,27 @@
-MainMenu
+Figure out a good way for ui and app to work together
+
+Options:
+
+1. App calls Ui functions to show certain menus and handles state
+2. Ui runs independently from the app and triggers events that the app responds to
+3. Ui has internal state that the app uses (polls) to call the right ui function at the right time
+
+Example 1
+1. MainMenu is shown
+2. User selects Shop Menu
+3. App changes state to shop menu after ui.MainMenu returns the user selection
+4. App calls ui.ShopMenu()
+
+Example 2
+
+1. MainMenu is shown
+2. User selects shop menu
+3. Ui triggers SelectedShopMenuEvent
+4. App calls ui.ShopMenu()
+
+Example 3
+
+1. MainMenu is shown
+2. User selects shop menu
+3. Ui stores user selection of shop menu
+4. App polls the current state and calls ui.ShopMenu()
