@@ -9,6 +9,12 @@ Shop System
 		- customer has item afterwards
 	- Customer can return items
 		- only when it was bought in the first place
+	- Console UI
+		- Main Menu
+			- Shop Menu
+			- Customer Menu
+				- Customer Buy Menu
+				- Customer Refund Menu
 
 C#
 

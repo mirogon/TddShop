@@ -6,14 +6,16 @@ using System.Threading.Tasks;
 using Xunit;
 using Moq;
 
-namespace ShopTest.Ui {
+namespace ShopTest.Ui.CLI {
     using Shop.Ui;
     using Shop.Items;
     using Shop.Customers;
+    using Shop.Ui.CLI;
+
     public class ConsoleUiTest {
         [Fact]
         public void MainMenu_CallsConstructMainMenu() {
-            var consoleUiBuilderMock = new Mock<TextUiBuilder>();
+            var consoleUiBuilderMock = new Mock<UiTextCreator>();
             var consoleInput = new Mock<ConsoleInput>();
 
             Ui ui = new ConsoleUi(consoleUiBuilderMock.Object, consoleInput.Object);
@@ -27,7 +29,7 @@ namespace ShopTest.Ui {
         }
         [Fact]
         public void ShopMenu_CallsConstructShopMenu() {
-            var consoleUiBuilderMock = new Mock<TextUiBuilder>();
+            var consoleUiBuilderMock = new Mock<UiTextCreator>();
             var consoleInput = new Mock<ConsoleInput>();
 
             Ui ui = new ConsoleUi(consoleUiBuilderMock.Object, consoleInput.Object);
@@ -46,7 +48,7 @@ namespace ShopTest.Ui {
         }
         [Fact]
         public void CustomerMenu_CallsConstructCustomerMenu() {
-            var consoleUiBuilderMock = new Mock<TextUiBuilder>();
+            var consoleUiBuilderMock = new Mock<UiTextCreator>();
             var consoleInput = new Mock<ConsoleInput>();
 
             Ui ui = new ConsoleUi(consoleUiBuilderMock.Object, consoleInput.Object);
@@ -63,7 +65,7 @@ namespace ShopTest.Ui {
         }
         [Fact]
         public void CustomerBuyMenu_CallsConstructCustomerBuyMenu() {
-            var consoleUiBuilderMock = new Mock<TextUiBuilder>();
+            var consoleUiBuilderMock = new Mock<UiTextCreator>();
             var consoleInput = new Mock<ConsoleInput>();
 
             Ui ui = new ConsoleUi(consoleUiBuilderMock.Object, consoleInput.Object);

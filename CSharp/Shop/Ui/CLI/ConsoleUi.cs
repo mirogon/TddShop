@@ -4,13 +4,14 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Shop.Ui {
+namespace Shop.Ui.CLI {
     using Items;
     using Customers;
-    public class ConsoleUi : Ui{
-        TextUiBuilder textUiBuilder;
+
+    public class ConsoleUi : Ui {
+        UiTextCreator textUiBuilder;
         ConsoleInput consoleInput;
-        public ConsoleUi(TextUiBuilder textUiBuilder, ConsoleInput consoleInput) {
+        public ConsoleUi(UiTextCreator textUiBuilder, ConsoleInput consoleInput) {
             this.textUiBuilder = textUiBuilder;
             this.consoleInput = consoleInput;
         }

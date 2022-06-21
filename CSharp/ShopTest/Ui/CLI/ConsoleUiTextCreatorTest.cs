@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 using System.IO;
 using Xunit;
 
-namespace ShopTest.Ui {
-    using Shop.Ui;
+namespace ShopTest.Ui.CLI {
     using Shop.Items;
     using Shop.Customers;
     using Shop;
+    using Shop.Ui.CLI;
     public class ConsoleUiBuilderTestHelper {
         public static string LoadFromFile(string fileName) {
             FileStream fs = new FileStream(fileName, FileMode.Open);
@@ -22,7 +22,7 @@ namespace ShopTest.Ui {
     public class ConsoleUiBuilderTest {
         [Fact]
         public void ConstructMainMenu_Correct() {
-            ConsoleUiBuilder uiBuilder = new ConsoleUiBuilder();
+            UiTextCreator uiBuilder = new ConsoleUiTextCreator();
             string actual = uiBuilder.ConstructMainMenu();
             string expected = ConsoleUiBuilderTestHelper.LoadFromFile("TestData/ConstructMainMenu");
             Assert.Equal(expected, actual);
@@ -30,14 +30,14 @@ namespace ShopTest.Ui {
 
         [Fact]
         public void ConstructShopMenu_WithoutItems() {
-            ConsoleUiBuilder builder = new ConsoleUiBuilder();
+            UiTextCreator builder = new ConsoleUiTextCreator();
             List<ItemBatch> items = new List<ItemBatch>();
             string result = builder.ConstructShopMenu(items);
             Assert.Equal("Items\n\nName                Price               Stock", result);
         }
         [Fact]
         public void ConstructShopMenu_WithItems() {
-            ConsoleUiBuilder builder = new ConsoleUiBuilder();
+            UiTextCreator builder = new ConsoleUiTextCreator();
             List<ItemBatch> items = new List<ItemBatch>();
             items.Add(new ItemBatch(new Item("Black Shirt", 15), 110));
             string result = builder.ConstructShopMenu(items);
@@ -46,7 +46,7 @@ namespace ShopTest.Ui {
         }
         [Fact]
         public void ConstructCustomerMenu_WithItem() {
-            ConsoleUiBuilder builder = new ConsoleUiBuilder();
+            UiTextCreator builder = new ConsoleUiTextCreator();
 
             Shop shop = new Shop();
 
@@ -63,7 +63,7 @@ namespace ShopTest.Ui {
         }
         [Fact]
         public void ConstructCustomerMenu_WithoutItem() {
-            ConsoleUiBuilder builder = new ConsoleUiBuilder();
+            UiTextCreator builder = new ConsoleUiTextCreator();
 
             Customer c = new Customer(1000);
 
@@ -74,7 +74,7 @@ namespace ShopTest.Ui {
         }
         [Fact]
         public void ConstructCustomerBuyMenu() {
-            ConsoleUiBuilder builder = new ConsoleUiBuilder();
+            UiTextCreator builder = new ConsoleUiTextCreator();
 
             Shop shop = new Shop();
 
@@ -88,7 +88,7 @@ namespace ShopTest.Ui {
         }
         [Fact]
         public void ConstructCustomerBuyMenuWithoutItems() {
-            ConsoleUiBuilder builder = new ConsoleUiBuilder();
+            UiTextCreator builder = new ConsoleUiTextCreator();
 
             Shop shop = new Shop();
 
@@ -98,8 +98,8 @@ namespace ShopTest.Ui {
         }
         [Fact]
         public void ConstructCustomerRefundMenu() {
-            ConsoleUiBuilder builder = new ConsoleUiBuilder();
-            
+            UiTextCreator builder = new ConsoleUiTextCreator();
+
             Customer c = new Customer(1000);
 
             Shop shop = new Shop();
@@ -115,8 +115,8 @@ namespace ShopTest.Ui {
         }
         [Fact]
         public void ConstructCustomerRefundMenu_WithoutItems() {
-            ConsoleUiBuilder builder = new ConsoleUiBuilder();
-            
+            UiTextCreator builder = new ConsoleUiTextCreator();
+
             Customer c = new Customer(1000);
 
             Shop shop = new Shop();
