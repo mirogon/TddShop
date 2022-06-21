@@ -15,10 +15,11 @@ namespace Shop.Ui.CLI {
             this.textUiBuilder = textUiBuilder;
             this.consoleInput = consoleInput;
         }
-        public void MainMenu() {
+        public string MainMenu() {
             string mainMenuText = textUiBuilder.ConstructMainMenu();
             Console.WriteLine(mainMenuText);
             string input = consoleInput.ReadLine();
+            return input;
         }
         public void ShopMenu(List<ItemBatch> items) {
             string shopMenuText = textUiBuilder.ConstructShopMenu(items);

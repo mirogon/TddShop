@@ -20,12 +20,13 @@ namespace ShopTest.Ui.CLI {
 
             Ui ui = new ConsoleUi(consoleUiBuilderMock.Object, consoleInput.Object);
             consoleUiBuilderMock.Setup(b => b.ConstructMainMenu());
-            consoleInput.Setup(i => i.ReadLine());
+            consoleInput.Setup(i => i.ReadLine()).Returns("1");
 
-            ui.MainMenu();
+            string actual = ui.MainMenu();
 
             consoleUiBuilderMock.Verify(b => b.ConstructMainMenu(), Times.Once());
             consoleInput.Verify(i => i.ReadLine(), Times.Once());
+            Assert.Equal("1", actual);
         }
         [Fact]
         public void ShopMenu_CallsConstructShopMenu() {
