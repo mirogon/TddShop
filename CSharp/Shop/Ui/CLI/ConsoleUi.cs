@@ -21,15 +21,17 @@ namespace Shop.Ui.CLI {
             string input = consoleInput.ReadLine();
             return input;
         }
-        public void ShopMenu(List<ItemBatch> items) {
+        public string ShopMenu(List<ItemBatch> items) {
             string shopMenuText = textUiBuilder.ConstructShopMenu(items);
             Console.Write(shopMenuText);
             string i = consoleInput.ReadLine();
+            return i;
         }
-        public void CustomerMenu(Customer c) {
+        public string CustomerMenu(Customer c) {
             string menuText = textUiBuilder.ConstructCustomerMenu(c);
             Console.Write(menuText);
             var input = consoleInput.ReadLine();
+            return input;
         }
         public void CustomerBuyMenu(List<ItemBatch> items) {
             string menuText = textUiBuilder.ConstructCustomerBuyMenu(items);

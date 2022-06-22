@@ -1,4 +1,4 @@
-Figure out a good way for ui and app to work together
+Improve/Fix ui designs (add back option, INPUT)
 
 Options:
 

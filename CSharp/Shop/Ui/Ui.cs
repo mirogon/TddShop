@@ -9,8 +9,8 @@ namespace Shop.Ui {
     using Customers;
     public interface Ui {
         public string MainMenu();
-        public void ShopMenu(List<ItemBatch> items);
-        public void CustomerMenu(Customer c);
+        public string ShopMenu(List<ItemBatch> items);
+        public string CustomerMenu(Customer c);
         public void CustomerBuyMenu(List<ItemBatch> items);
     }
 }

@@ -57,12 +57,13 @@ namespace ShopTest.Ui.CLI {
             Customer c = new Customer(1000);
 
             consoleUiBuilderMock.Setup(b => b.ConstructCustomerMenu(It.IsAny<Customer>()));
-            consoleInput.Setup(i => i.ReadLine());
+            consoleInput.Setup(i => i.ReadLine()).Returns("5");
 
-            ui.CustomerMenu(c);
+            string input = ui.CustomerMenu(c);
 
             consoleUiBuilderMock.Verify(uiBuilder => uiBuilder.ConstructCustomerMenu(c));
             consoleInput.Verify(input => input.ReadLine());
+            Assert.Equal("5", input);
         }
         [Fact]
         public void CustomerBuyMenu_CallsConstructCustomerBuyMenu() {

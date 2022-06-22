@@ -29,13 +29,6 @@ namespace ShopTest.Ui.CLI {
         }
 
         [Fact]
-        public void ConstructShopMenu_WithoutItems() {
-            UiTextCreator builder = new ConsoleUiTextCreator();
-            List<ItemBatch> items = new List<ItemBatch>();
-            string result = builder.ConstructShopMenu(items);
-            Assert.Equal("Items\n\nName                Price               Stock", result);
-        }
-        [Fact]
         public void ConstructShopMenu_WithItems() {
             UiTextCreator builder = new ConsoleUiTextCreator();
             List<ItemBatch> items = new List<ItemBatch>();

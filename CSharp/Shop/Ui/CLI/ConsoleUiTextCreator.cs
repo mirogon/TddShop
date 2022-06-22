@@ -32,6 +32,9 @@ namespace Shop.Ui.CLI {
                 }
                 s += items[i].Stock;
             }
+
+            s += "\n\n3 - Back\n\n";
+
             return s;
         }
         public string ConstructCustomerMenu(Customer customer) {
@@ -42,7 +45,8 @@ namespace Shop.Ui.CLI {
             }
             s += "\n\n";
             s += "1 - Buy Item\n";
-            s += "2 - Refund Item";
+            s += "2 - Refund Item\n";
+            s += "\nINPUT: ";
             return s;
         }
         public string ConstructCustomerBuyMenu(List<ItemBatch> shopItems) {

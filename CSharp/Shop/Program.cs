@@ -17,6 +17,12 @@ Customer customer = new Customer(1000);
 Shop.Shop shop = new Shop.Shop();
 Item redShoes = new Item("Red Shoes", 55);
 ItemBatch batch = new ItemBatch(redShoes, 10);
+shop.Add(batch);
 
 App app = new App(ui, customer, shop);
-app.Start();
+
+while (app.Running) {
+    app.Update();
+}
+
+System.Environment.Exit(0);
