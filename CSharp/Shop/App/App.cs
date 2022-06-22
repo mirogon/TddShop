@@ -8,6 +8,13 @@ using Shop.Customers;
 
 namespace Shop.App {
     using Ui;
+
+    public enum AppState {
+        Exit = -1,
+        MainMenu = 0,
+        ShopMenu = 1,
+        CustomerMenu = 2
+    }
     public class App {
         public bool Running = true;
 
@@ -15,7 +22,7 @@ namespace Shop.App {
         private Customer customer;
         private Shop shop;
 
-        int currentState = 0; //0 MainMenu, 1 ShopMenu
+        AppState currentState = AppState.MainMenu;
 
         public App(Ui ui, Customer customer, Shop shop) {
             this.ui = ui;
@@ -26,20 +33,27 @@ namespace Shop.App {
             if(currentState == 0) {
                 string mainMenuInput = ui.MainMenu();
                 if (mainMenuInput == "1") {
-                    currentState = 1;
+                    currentState = AppState.ShopMenu;
                 }
                 else if (mainMenuInput == "2") {
-                    ui.CustomerMenu(customer);
+                    currentState = AppState.CustomerMenu;
                 }
                 else if (mainMenuInput == "3") {
-                    currentState = -1;
+                    currentState = AppState.Exit;
+                    Running = false;
                     return;
                 }
             }
-            else if(currentState == 1) {
+            else if(currentState == AppState.ShopMenu) {
                 string input = ui.ShopMenu(shop.Items);
                 if(input == "3") {
-                    Running = false;
+                    currentState = AppState.MainMenu;
+                }
+            }
+            else if(currentState == AppState.CustomerMenu) {
+                string input = ui.CustomerMenu(customer);
+                if(input == "3") {
+                    currentState = AppState.MainMenu;
                 }
             }
         }

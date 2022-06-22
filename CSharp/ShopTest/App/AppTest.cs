@@ -77,6 +77,7 @@ namespace ShopTest.App {
             App app = new App(uiMock.Object, customer, shop);
 
             app.Update();
+            app.Update();
 
             uiMock.Verify(ui => ui.MainMenu());
             uiMock.Verify(ui => ui.CustomerMenu(customer));
@@ -91,6 +92,7 @@ namespace ShopTest.App {
 
             App app = new App(uiMock.Object, customer, shop);
 
+            app.Update();
             app.Update();
 
             uiMock.Verify(ui => ui.MainMenu(), Times.Once());

@@ -10,7 +10,7 @@ namespace Shop.Ui.CLI {
 
     public class ConsoleUiTextCreator : UiTextCreator {
         public string ConstructMainMenu() {
-            return "1 - Shop Menu\n2 - Customer Menu\n3 - Exit";
+            return "1 - Shop Menu\n2 - Customer Menu\n3 - Exit\n\nINPUT: ";
         }
         public string ConstructShopMenu(List<ItemBatch> items) {
             string s = "Items\n\n" + "Name                Price               Stock";
@@ -33,7 +33,7 @@ namespace Shop.Ui.CLI {
                 s += items[i].Stock;
             }
 
-            s += "\n\n3 - Back\n\n";
+            s += "\n\n3 - Back\n\nINPUT: ";
 
             return s;
         }
@@ -46,6 +46,7 @@ namespace Shop.Ui.CLI {
             s += "\n\n";
             s += "1 - Buy Item\n";
             s += "2 - Refund Item\n";
+            s += "3 - Back\n";
             s += "\nINPUT: ";
             return s;
         }
