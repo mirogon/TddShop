@@ -65,7 +65,18 @@ namespace Shop.App {
                 }
             }
             else if(currentState == AppState.CustomerBuyMenu) {
-                ui.CustomerBuyMenu(shop.Items);
+                string input = ui.CustomerBuyMenu(shop.Items);
+                if(input == "BACK") {
+                    currentState = AppState.CustomerMenu;
+                }
+                else {
+                    try {
+                        customer.Buy(shop, input);
+                    }
+                    catch(Exception e) {
+
+                    }
+                }
             }
             else if(currentState == AppState.CustomerRefundMenu) {
                 ui.CustomerRefundMenu(customer.Items);

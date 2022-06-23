@@ -180,7 +180,36 @@ namespace ShopTest.App {
             uiMock.Verify(ui => ui.CustomerMenu(It.IsAny<Customer>()), Times.Once());
 
             app.Update();
-            uiMock.Verify(ui => ui.CustomerMenu(It.IsAny<Customer>()), Times.Once());
+            uiMock.Verify(ui => ui.CustomerBuyMenu(It.IsAny<List<ItemBatch>>()), Times.Once());
+
+            app.Update();
+            uiMock.Verify(ui => ui.CustomerMenu(It.IsAny<Customer>()), Times.Exactly(2));
+        }
+        [Fact]
+        public void CustomerBuyMenu_WithBuyInput_Buys() {
+            Customer customer = new Customer(100);
+            Shop shop = new Shop();
+            var uiMock = new Mock<Ui>();
+
+            Item redShoes = new Item("Red Shoes", 100);
+            ItemBatch batch = new ItemBatch(redShoes, 1);
+            shop.Add(batch);
+
+            uiMock.Setup(ui => ui.MainMenu()).Returns("CUSTOMER");
+            uiMock.Setup(ui => ui.CustomerMenu(It.IsAny<Customer>())).Returns("BUY");
+            uiMock.Setup(ui => ui.CustomerBuyMenu(It.IsAny<List<ItemBatch>>())).Returns("Red Shoes");
+
+            App app = new App(uiMock.Object, customer, shop);
+
+            Assert.Single(shop.Items);
+            Assert.Empty(customer.Items);
+
+            app.Update();
+            app.Update();
+            app.Update();
+
+            Assert.Empty(shop.Items);
+            Assert.Single(customer.Items);
         }
 
     }
