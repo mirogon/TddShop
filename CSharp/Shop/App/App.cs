@@ -32,13 +32,13 @@ namespace Shop.App {
         public void Update() {
             if(currentState == 0) {
                 string mainMenuInput = ui.MainMenu();
-                if (mainMenuInput == "1") {
+                if (mainMenuInput.Contains("SHOP", StringComparison.OrdinalIgnoreCase)) {
                     currentState = AppState.ShopMenu;
                 }
-                else if (mainMenuInput == "2") {
+                else if (mainMenuInput.Contains("CUSTOMER", StringComparison.OrdinalIgnoreCase)) {
                     currentState = AppState.CustomerMenu;
                 }
-                else if (mainMenuInput == "3") {
+                else if (mainMenuInput.Contains("EXIT", StringComparison.OrdinalIgnoreCase)) {
                     currentState = AppState.Exit;
                     Running = false;
                     return;
@@ -46,7 +46,7 @@ namespace Shop.App {
             }
             else if(currentState == AppState.ShopMenu) {
                 string input = ui.ShopMenu(shop.Items);
-                if(input == "3") {
+                if(input == "BACK") {
                     currentState = AppState.MainMenu;
                 }
             }

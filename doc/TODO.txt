@@ -1,9 +1,25 @@
-Improve/Fix ui designs (add back option, INPUT)
+Shop Menu
+
+Template:
+
+YOUR ITEMS
+
+Name
+Black Shoes
+Red Shirt
+
+USER COMMANDS
+
+BUY    - Buy Items from the Shop
+REFUND - Refund Item
+BACK   - Go back to the Main Menu
+
+INPUT: 
 
 Options:
 
 1. App calls Ui functions to show certain menus and handles state
-2. Ui runs independently from the app and triggers events that the app responds to
+2. Ui triggers events that the app responds to
 3. Ui has internal state that the app uses (polls) to call the right ui function at the right time
 
 Example 1

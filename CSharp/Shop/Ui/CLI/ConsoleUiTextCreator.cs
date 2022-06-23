@@ -10,10 +10,10 @@ namespace Shop.Ui.CLI {
 
     public class ConsoleUiTextCreator : UiTextCreator {
         public string ConstructMainMenu() {
-            return "1 - Shop Menu\n2 - Customer Menu\n3 - Exit\n\nINPUT: ";
+            return "USER COMMANDS\n\nSHOP     - Shop Menu\nCUSTOMER - Customer Menu\nEXIT     - Exit Application\n\nINPUT: ";
         }
         public string ConstructShopMenu(List<ItemBatch> items) {
-            string s = "Items\n\n" + "Name                Price               Stock";
+            string s = "SHOP ITEMS\n\n" + "Name                Price               Stock";
 
             if (items.Count > 0) {
                 s += "\n";
@@ -33,25 +33,22 @@ namespace Shop.Ui.CLI {
                 s += items[i].Stock;
             }
 
-            s += "\n\n3 - Back\n\nINPUT: ";
+            s += "\n\nUSER COMMANDS\n\nBACK - Go back to the Main Menu\n\nINPUT: ";
 
             return s;
         }
         public string ConstructCustomerMenu(Customer customer) {
-            string s = "Items";
+            string s = "YOUR ITEMS";
             s += "\n\n";
             for (int i = 0; i < customer.Items.Count; ++i) {
                 s += customer.Items[i].Name;
             }
             s += "\n\n";
-            s += "1 - Buy Item\n";
-            s += "2 - Refund Item\n";
-            s += "3 - Back\n";
-            s += "\nINPUT: ";
+            s += "USER COMMANDS\n\nBUY    - Buy Item\nREFUND - Refund Item\nBACK   - Go back to the Main Menu\n\nINPUT: ";
             return s;
         }
         public string ConstructCustomerBuyMenu(List<ItemBatch> shopItems) {
-            string s = "Shop Items\n\n";
+            string s = "SHOP ITEMS\n\n";
             s += "Name                Price               Stock\n";
             for (int i = 0; i < shopItems.Count; ++i) {
                 s += shopItems[i].Item.Name;
@@ -67,11 +64,15 @@ namespace Shop.Ui.CLI {
                 s += shopItems[i].Stock;
                 s += "\n";
             }
-            s += "\nBuy Item: ";
+            s += "\nUSER COMMANDS\n\n";
+            s+= "[ITEM]  - Buy item with the name [ITEM]\n";
+            s += "BACK    - Go back to the Customer Menu\n\n";
+            s += "INPUT: ";
+
             return s;
         }
         public string ConstructCustomerRefundMenu(List<Item> customerItems) {
-            string s = "Items\n\n";
+            string s = "YOUR ITEMS\n\n";
             s += "Name                Value\n";
             for (int i = 0; i < customerItems.Count; ++i) {
                 s += customerItems[i].Name;
@@ -82,7 +83,7 @@ namespace Shop.Ui.CLI {
                 s += customerItems[i].Value;
                 s += "\n";
             }
-            s += "\nRefund Item: ";
+            s += "\nUSER COMMANDS\n\n[ITEM] - Refund item with [ITEM] name\nBACK   - Go back to the Customer Menu\n\nINPUT: ";
             return s;
 
         }

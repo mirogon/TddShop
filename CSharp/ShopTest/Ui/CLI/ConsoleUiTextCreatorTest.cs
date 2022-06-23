@@ -55,17 +55,6 @@ namespace ShopTest.Ui.CLI {
             Assert.Equal(expected, actual);
         }
         [Fact]
-        public void ConstructCustomerMenu_WithoutItem() {
-            UiTextCreator builder = new ConsoleUiTextCreator();
-
-            Customer c = new Customer(1000);
-
-            string expected = ConsoleUiBuilderTestHelper.LoadFromFile("TestData/ConstructCustomerMenuWithoutItem");
-            string actual = builder.ConstructCustomerMenu(c);
-
-            Assert.Equal(expected, actual);
-        }
-        [Fact]
         public void ConstructCustomerBuyMenu() {
             UiTextCreator builder = new ConsoleUiTextCreator();
 
@@ -76,16 +65,6 @@ namespace ShopTest.Ui.CLI {
             shop.Add(itemBatch);
 
             string expected = ConsoleUiBuilderTestHelper.LoadFromFile("TestData/ConstructCustomerBuyMenu");
-            string actual = builder.ConstructCustomerBuyMenu(shop.Items);
-            Assert.Equal(expected, actual);
-        }
-        [Fact]
-        public void ConstructCustomerBuyMenuWithoutItems() {
-            UiTextCreator builder = new ConsoleUiTextCreator();
-
-            Shop shop = new Shop();
-
-            string expected = ConsoleUiBuilderTestHelper.LoadFromFile("TestData/ConstructCustomerBuyMenuWithoutItems");
             string actual = builder.ConstructCustomerBuyMenu(shop.Items);
             Assert.Equal(expected, actual);
         }
@@ -102,21 +81,6 @@ namespace ShopTest.Ui.CLI {
             c.Buy(shop, "Blue Pants");
 
             string expected = ConsoleUiBuilderTestHelper.LoadFromFile("TestData/ConstructCustomerRefundMenu");
-            string actual = builder.ConstructCustomerRefundMenu(c.Items);
-
-            Assert.Equal(expected, actual);
-        }
-        [Fact]
-        public void ConstructCustomerRefundMenu_WithoutItems() {
-            UiTextCreator builder = new ConsoleUiTextCreator();
-
-            Customer c = new Customer(1000);
-
-            Shop shop = new Shop();
-            Item item = new Item("Blue Pants", 60);
-            shop.Add(new ItemBatch(item, 1));
-
-            string expected = ConsoleUiBuilderTestHelper.LoadFromFile("TestData/ConstructCustomerRefundMenuWithoutItems");
             string actual = builder.ConstructCustomerRefundMenu(c.Items);
 
             Assert.Equal(expected, actual);
