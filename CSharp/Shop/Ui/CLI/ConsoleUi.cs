@@ -39,10 +39,10 @@ namespace Shop.Ui.CLI {
             string i = consoleInput.ReadLine();
             return i;
         }
-        public void CustomerRefundMenu(List<Item> customerItems) {
+        public string CustomerRefundMenu(List<Item> customerItems) {
             string menuText = textUiBuilder.ConstructCustomerRefundMenu(customerItems);
             Console.Write(menuText);
-            consoleInput.ReadLine();
+            return consoleInput.ReadLine();
         }
     }
 }

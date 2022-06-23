@@ -12,6 +12,6 @@ namespace Shop.Ui {
         public string ShopMenu(List<ItemBatch> items);
         public string CustomerMenu(Customer c);
         public string CustomerBuyMenu(List<ItemBatch> items);
-        public void CustomerRefundMenu(List<Item> items);
+        public string CustomerRefundMenu(List<Item> items);
     }
 }

@@ -54,13 +54,13 @@ namespace Shop.App {
             }
             else if(currentState == AppState.CustomerMenu) {
                 string input = ui.CustomerMenu(customer);
-                if(input == "BUY") {
+                if(input.Contains("BUY", StringComparison.OrdinalIgnoreCase)) {
                     currentState = AppState.CustomerBuyMenu;
                 }
-                else if(input == "REFUND") {
+                else if(input.Contains("REFUND",StringComparison.OrdinalIgnoreCase)) {
                     currentState = AppState.CustomerRefundMenu;
                 }
-                else if(input == "BACK") {
+                else if(input.Contains("BACK",StringComparison.OrdinalIgnoreCase)) {
                     currentState = AppState.MainMenu;
                 }
             }
@@ -79,7 +79,17 @@ namespace Shop.App {
                 }
             }
             else if(currentState == AppState.CustomerRefundMenu) {
-                ui.CustomerRefundMenu(customer.Items);
+                string input = ui.CustomerRefundMenu(customer.Items);
+                if(input == "BACK") {
+
+                }
+                else {
+                    for (int i = 0; i < customer.Items.Count; i++) {
+                        if (customer.Items[i].Name == input) {
+                            customer.Return(shop, customer.Items[i]);
+                        }
+                    }
+                }
             }
         }
     }

@@ -211,6 +211,34 @@ namespace ShopTest.App {
             Assert.Empty(shop.Items);
             Assert.Single(customer.Items);
         }
+        [Fact] 
+        public void CustomerRefundMenu_WithRefundInput_RefundsItem() {
+            Customer customer = new Customer(100);
+            Shop shop = new Shop();
+            var uiMock = new Mock<Ui>();
+
+            Item redShoes = new Item("Red Shoes", 100);
+            ItemBatch batch = new ItemBatch(redShoes, 1);
+            shop.Add(batch);
+
+            customer.Buy(shop, "Red Shoes");
+
+            uiMock.Setup(ui => ui.MainMenu()).Returns("Customer");
+            uiMock.Setup(ui => ui.CustomerMenu(It.IsAny<Customer>())).Returns("Refund");
+            uiMock.Setup(ui => ui.CustomerRefundMenu(It.IsAny<List<Item>>())).Returns("Red Shoes");
+
+            App app = new App(uiMock.Object, customer, shop);
+
+            Assert.Empty(shop.Items);
+            Assert.Single(customer.Items);
+
+            app.Update();
+            app.Update();
+            app.Update();
+
+            Assert.Empty(customer.Items);
+            Assert.Single(shop.Items);
+        }
 
     }
 }
