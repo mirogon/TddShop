@@ -43,10 +43,11 @@ namespace ShopTest.Ui.CLI {
 
             Shop shop = new Shop();
 
-            ItemBatch itemBatch = new ItemBatch(new Item("Black Shirt", 15), 1);
+            ItemBatch itemBatch = new ItemBatch(new Item("Black Shirt", 15), 2);
             shop.Add(itemBatch);
 
             Customer c = new Customer(1000);
+            c.Buy(shop, "Black Shirt");
             c.Buy(shop, "Black Shirt");
 
             string expected = ConsoleUiBuilderTestHelper.LoadFromFile("TestData/ConstructCustomerMenu");

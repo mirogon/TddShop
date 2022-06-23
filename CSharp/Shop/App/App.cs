@@ -32,6 +32,7 @@ namespace Shop.App {
             this.shop = shop;
         }
         public void Update() {
+            Console.Clear();
             if(currentState == 0) {
                 string mainMenuInput = ui.MainMenu();
                 if (mainMenuInput.Contains("SHOP", StringComparison.OrdinalIgnoreCase)) {
@@ -48,7 +49,7 @@ namespace Shop.App {
             }
             else if(currentState == AppState.ShopMenu) {
                 string input = ui.ShopMenu(shop.Items);
-                if(input == "BACK") {
+                if(input.Contains("BACK", StringComparison.OrdinalIgnoreCase)) {
                     currentState = AppState.MainMenu;
                 }
             }
@@ -66,7 +67,7 @@ namespace Shop.App {
             }
             else if(currentState == AppState.CustomerBuyMenu) {
                 string input = ui.CustomerBuyMenu(shop.Items);
-                if(input == "BACK") {
+                if(input.Contains("BACK", StringComparison.OrdinalIgnoreCase)) {
                     currentState = AppState.CustomerMenu;
                 }
                 else {
@@ -80,8 +81,8 @@ namespace Shop.App {
             }
             else if(currentState == AppState.CustomerRefundMenu) {
                 string input = ui.CustomerRefundMenu(customer.Items);
-                if(input == "BACK") {
-
+                if(input.Contains("BACK", StringComparison.OrdinalIgnoreCase)) {
+                    currentState = AppState.CustomerMenu;
                 }
                 else {
                     for (int i = 0; i < customer.Items.Count; i++) {

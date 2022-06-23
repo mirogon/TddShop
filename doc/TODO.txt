@@ -1,5 +1,4 @@
-Customer Main Menu
-	- Refund menu
+Customer Menu show multiple items correctly with \n
 
 Template:
 

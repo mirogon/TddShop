@@ -42,8 +42,9 @@ namespace Shop.Ui.CLI {
             s += "\n\n";
             for (int i = 0; i < customer.Items.Count; ++i) {
                 s += customer.Items[i].Name;
+                s += "\n";
             }
-            s += "\n\n";
+            s += "\n";
             s += "USER COMMANDS\n\nBUY    - Buy Item\nREFUND - Refund Item\nBACK   - Go back to the Main Menu\n\nINPUT: ";
             return s;
         }

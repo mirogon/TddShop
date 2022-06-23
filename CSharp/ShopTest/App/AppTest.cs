@@ -31,6 +31,7 @@ namespace ShopTest.App {
             Shop shop = new Shop();
             var uiMock = new Mock<Ui>();
             uiMock.Setup(ui => ui.MainMenu()).Returns("SHOP");
+            uiMock.Setup(ui => ui.ShopMenu(It.IsAny<List<ItemBatch>>())).Returns("");
 
             App app = new App(uiMock.Object, customer, shop);
 
@@ -50,6 +51,7 @@ namespace ShopTest.App {
             Shop shop = new Shop();
             var uiMock = new Mock<Ui>();
             uiMock.Setup(ui => ui.MainMenu()).Returns("CUSTOMER");
+            uiMock.Setup(ui => ui.CustomerMenu(It.IsAny<Customer>())).Returns("");
 
             App app = new App(uiMock.Object, customer, shop);
 
@@ -83,7 +85,7 @@ namespace ShopTest.App {
             Shop shop = new Shop();
             var uiMock = new Mock<Ui>();
             uiMock.Setup(ui => ui.MainMenu()).Returns("SHOP");
-            uiMock.Setup(ui => ui.ShopMenu(It.IsAny<List<ItemBatch>>())).Returns("BACK");
+            uiMock.Setup(ui => ui.ShopMenu(It.IsAny<List<ItemBatch>>())).Returns("back");
 
             App app = new App(uiMock.Object, customer, shop);
 
@@ -127,7 +129,7 @@ namespace ShopTest.App {
             var uiMock = new Mock<Ui>();
             uiMock.Setup(ui => ui.MainMenu()).Returns("CUSTOMER");
             uiMock.Setup(ui => ui.CustomerMenu(It.IsAny<Customer>())).Returns("BUY");
-            uiMock.Setup(ui => ui.CustomerBuyMenu(It.IsAny<List<ItemBatch>>()));
+            uiMock.Setup(ui => ui.CustomerBuyMenu(It.IsAny<List<ItemBatch>>())).Returns("");
 
             App app = new App(uiMock.Object, customer, shop);
 
@@ -148,7 +150,7 @@ namespace ShopTest.App {
             var uiMock = new Mock<Ui>();
             uiMock.Setup(ui => ui.MainMenu()).Returns("CUSTOMER");
             uiMock.Setup(ui => ui.CustomerMenu(It.IsAny<Customer>())).Returns("REFUND");
-            uiMock.Setup(ui => ui.CustomerRefundMenu(It.IsAny<List<Item>>()));
+            uiMock.Setup(ui => ui.CustomerRefundMenu(It.IsAny<List<Item>>())).Returns("");
 
             App app = new App(uiMock.Object, customer, shop);
 
@@ -210,6 +212,30 @@ namespace ShopTest.App {
 
             Assert.Empty(shop.Items);
             Assert.Single(customer.Items);
+        }
+        [Fact]
+        public void CustomerRefundMenu_WithBackInput_ReturnsToCustomerMenu() {
+            Customer customer = new Customer(100);
+            Shop shop = new Shop();
+            var uiMock = new Mock<Ui>();
+
+            App app = new App(uiMock.Object, customer, shop);
+            
+            uiMock.Setup(ui => ui.MainMenu()).Returns("Customer");
+            uiMock.Setup(ui => ui.CustomerMenu(It.IsAny<Customer>())).Returns("Refund");
+            uiMock.Setup(ui => ui.CustomerRefundMenu(It.IsAny<List<Item>>())).Returns("Back");
+
+            app.Update();
+            uiMock.Verify(ui => ui.MainMenu(), Times.Once());
+
+            app.Update();
+            uiMock.Verify(ui => ui.CustomerMenu(It.IsAny<Customer>()), Times.Once());
+
+            app.Update();
+            uiMock.Verify(ui => ui.CustomerRefundMenu(It.IsAny<List<Item>>()), Times.Once());
+
+            app.Update();
+            uiMock.Verify(ui => ui.CustomerMenu(It.IsAny<Customer>()), Times.Exactly(2));
         }
         [Fact] 
         public void CustomerRefundMenu_WithRefundInput_RefundsItem() {
