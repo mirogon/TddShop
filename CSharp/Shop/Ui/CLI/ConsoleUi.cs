@@ -33,8 +33,14 @@ namespace Shop.Ui.CLI {
             var input = consoleInput.ReadLine();
             return input;
         }
-        public void CustomerBuyMenu(List<ItemBatch> items) {
+        public string CustomerBuyMenu(List<ItemBatch> items) {
             string menuText = textUiBuilder.ConstructCustomerBuyMenu(items);
+            Console.Write(menuText);
+            string i = consoleInput.ReadLine();
+            return i;
+        }
+        public void CustomerRefundMenu(List<Item> customerItems) {
+            string menuText = textUiBuilder.ConstructCustomerRefundMenu(customerItems);
             Console.Write(menuText);
             consoleInput.ReadLine();
         }

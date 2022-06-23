@@ -13,7 +13,9 @@ namespace Shop.App {
         Exit = -1,
         MainMenu = 0,
         ShopMenu = 1,
-        CustomerMenu = 2
+        CustomerMenu = 2,
+        CustomerBuyMenu = 3,
+        CustomerRefundMenu = 4
     }
     public class App {
         public bool Running = true;
@@ -52,9 +54,21 @@ namespace Shop.App {
             }
             else if(currentState == AppState.CustomerMenu) {
                 string input = ui.CustomerMenu(customer);
-                if(input == "3") {
+                if(input == "BUY") {
+                    currentState = AppState.CustomerBuyMenu;
+                }
+                else if(input == "REFUND") {
+                    currentState = AppState.CustomerRefundMenu;
+                }
+                else if(input == "BACK") {
                     currentState = AppState.MainMenu;
                 }
+            }
+            else if(currentState == AppState.CustomerBuyMenu) {
+                ui.CustomerBuyMenu(shop.Items);
+            }
+            else if(currentState == AppState.CustomerRefundMenu) {
+                ui.CustomerRefundMenu(customer.Items);
             }
         }
     }

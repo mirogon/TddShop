@@ -76,13 +76,29 @@ namespace ShopTest.Ui.CLI {
             items.Add(new ItemBatch(new Item("Black Shoe", 44), 1));
 
             consoleUiBuilderMock.Setup(b => b.ConstructCustomerBuyMenu(It.IsAny<List<ItemBatch>>()));
-            consoleInput.Setup(i => i.ReadLine());
+            consoleInput.Setup(i => i.ReadLine()).Returns("TEST");
 
-            ui.CustomerBuyMenu(items);
+            string actual = ui.CustomerBuyMenu(items);
 
             consoleUiBuilderMock.Verify(uiBuilder => uiBuilder.ConstructCustomerBuyMenu(items));
             consoleInput.Verify(input => input.ReadLine());
+            Assert.Equal("TEST", actual);
 
+        }
+        [Fact]
+        public void CustomerRefundMenu_CallsCOnstructCustomerRefundMenu() {
+            var consoleUiBuilderMock = new Mock<UiTextCreator>();
+            var consoleInput = new Mock<ConsoleInput>();
+
+            Ui ui = new ConsoleUi(consoleUiBuilderMock.Object, consoleInput.Object);
+
+            consoleUiBuilderMock.Setup(b => b.ConstructCustomerRefundMenu(It.IsAny<List<Item>>()));
+            consoleInput.Setup(i => i.ReadLine());
+
+            ui.CustomerRefundMenu(new List<Item>());
+
+            consoleUiBuilderMock.Verify(uiBuilder => uiBuilder.ConstructCustomerRefundMenu(new List<Item>()));
+            consoleInput.Verify(input => input.ReadLine());
         }
     }
 }

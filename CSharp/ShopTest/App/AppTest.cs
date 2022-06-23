@@ -18,7 +18,7 @@ namespace ShopTest.App {
             Customer customer = new Customer(1000);
             Shop shop = new Shop();
             var uiMock = new Mock<Ui>();
-            uiMock.Setup(ui => ui.MainMenu());
+            uiMock.Setup(ui => ui.MainMenu()).Returns("0");
             App app = new App(uiMock.Object, customer, shop);
 
             app.Update();
@@ -101,12 +101,12 @@ namespace ShopTest.App {
         }
 
         [Fact]
-        public void CustomerMenu_3Input_ReturnsToMainMenu() {
+        public void CustomerMenu_WIthBACKInput_ReturnsToMainMenu() {
             Customer customer = new Customer(100);
             Shop shop = new Shop();
             var uiMock = new Mock<Ui>();
-            uiMock.Setup(ui => ui.MainMenu()).Returns("2");
-            uiMock.Setup(ui => ui.CustomerMenu(It.IsAny<Customer>())).Returns("3");
+            uiMock.Setup(ui => ui.MainMenu()).Returns("CUSTOMER");
+            uiMock.Setup(ui => ui.CustomerMenu(It.IsAny<Customer>())).Returns("BACK");
 
             App app = new App(uiMock.Object, customer, shop);
 
@@ -120,5 +120,68 @@ namespace ShopTest.App {
 
             uiMock.Verify(ui => ui.MainMenu(), Times.Exactly(2));
         }
+        [Fact]
+        public void CustomerMenu_WithBuyInput_GoesToCustomerBuyMenu() {
+            Customer customer = new Customer(100);
+            Shop shop = new Shop();
+            var uiMock = new Mock<Ui>();
+            uiMock.Setup(ui => ui.MainMenu()).Returns("CUSTOMER");
+            uiMock.Setup(ui => ui.CustomerMenu(It.IsAny<Customer>())).Returns("BUY");
+            uiMock.Setup(ui => ui.CustomerBuyMenu(It.IsAny<List<ItemBatch>>()));
+
+            App app = new App(uiMock.Object, customer, shop);
+
+            app.Update();
+
+            uiMock.Verify(ui => ui.MainMenu(), Times.Once());
+            app.Update();
+
+            uiMock.Verify(ui => ui.CustomerMenu(customer), Times.Once());
+
+            app.Update();
+            uiMock.Verify(ui => ui.CustomerBuyMenu(It.IsAny<List<ItemBatch>>()), Times.Once());
+        }
+        [Fact]
+        public void CustomerMenu_WithRefundInput_GoesToCustomerRefundMenu() {
+            Customer customer = new Customer(100);
+            Shop shop = new Shop();
+            var uiMock = new Mock<Ui>();
+            uiMock.Setup(ui => ui.MainMenu()).Returns("CUSTOMER");
+            uiMock.Setup(ui => ui.CustomerMenu(It.IsAny<Customer>())).Returns("REFUND");
+            uiMock.Setup(ui => ui.CustomerRefundMenu(It.IsAny<List<Item>>()));
+
+            App app = new App(uiMock.Object, customer, shop);
+
+            app.Update();
+
+            uiMock.Verify(ui => ui.MainMenu(), Times.Once());
+            app.Update();
+
+            uiMock.Verify(ui => ui.CustomerMenu(customer), Times.Once());
+
+            app.Update();
+            uiMock.Verify(ui => ui.CustomerRefundMenu(It.IsAny<List<Item>>()), Times.Once());
+        }
+        [Fact]
+        public void CustomerBuyMenu_WithBACKInput_ReturnsToCustomerMenu() {
+            Customer customer = new Customer(100);
+            Shop shop = new Shop();
+            var uiMock = new Mock<Ui>();
+            uiMock.Setup(ui => ui.MainMenu()).Returns("CUSTOMER");
+            uiMock.Setup(ui => ui.CustomerMenu(It.IsAny<Customer>())).Returns("BUY");
+            uiMock.Setup(ui => ui.CustomerBuyMenu(It.IsAny<List<ItemBatch>>())).Returns("BACK");
+
+            App app = new App(uiMock.Object, customer, shop);
+
+            app.Update();
+            uiMock.Verify(ui => ui.MainMenu(), Times.Once());
+
+            app.Update();
+            uiMock.Verify(ui => ui.CustomerMenu(It.IsAny<Customer>()), Times.Once());
+
+            app.Update();
+            uiMock.Verify(ui => ui.CustomerMenu(It.IsAny<Customer>()), Times.Once());
+        }
+
     }
 }
