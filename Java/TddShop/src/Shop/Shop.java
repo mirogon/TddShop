@@ -12,9 +12,26 @@ public class Shop {
         items = new ArrayList<ItemBatch>();
     }
     public void Add(ItemBatch b){
+        for(int i = 0; i < items.size(); ++i){
+            if(items.get(i).Item().Name() == b.Item().Name()){
+                items.get(i).Stock += b.Stock;
+                return;
+            }
+        }
         items.add(b);
     }
     public List<ItemBatch> Items(){
         return items;
+    }
+    public int StockAvailable(String itemname){
+        for(int i = 0; i < items.size(); ++i){
+            if(itemname == items.get(i).Item().Name()){
+                return items.get(i).Stock;
+            }
+        }
+        return 0;
+    }
+    public int Revenue(){
+        return 0;
     }
 }

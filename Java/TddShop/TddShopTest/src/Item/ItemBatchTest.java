@@ -11,6 +11,6 @@ public class ItemBatchTest {
         ItemBatch batch = new ItemBatch(i, 100);
 
         Assert.assertEquals(i, batch.Item());
-        Assert.assertEquals(100, batch.Stock());
+        Assert.assertEquals(100, batch.Stock);
     }
 }

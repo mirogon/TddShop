@@ -2,15 +2,12 @@ package Item;
 
 public class ItemBatch {
     private Item item;
-    private int stock;
+    public int Stock;
     public ItemBatch(Item i, int stock){
         this.item = i;
-        this.stock = stock;
+        this.Stock = stock;
     }
     public Item Item(){
         return item;
-    }
-    public int Stock(){
-        return stock;
     }
 }
