@@ -5,6 +5,7 @@ import Item.ItemBatch;
 import org.junit.Assert;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
+import Customer.Wallet;
 
 public class ShopTest {
     @Test
@@ -43,5 +44,28 @@ public class ShopTest {
     public void Revenue_AtBegin_Zero(){
         Shop shop = new Shop();
         assertEquals(0, shop.Revenue());
+    }
+    @Test
+    public void Buy_ReducesFunds(){
+        Shop shop = new Shop();
+        Item item = new Item("Black Shirt", 15);
+        ItemBatch batch = new ItemBatch(item, 25);
+
+        shop.Add(batch);
+
+        assertEquals(25, shop.StockAvailable("Black Shirt"));
+
+        Wallet wallet = new Wallet(100);
+        shop.Buy("Black Shirt", wallet);
+
+        assertEquals(85, wallet.Funds);
+        assertEquals(24, shop.StockAvailable("Black Shirt"));
+    }
+    @Test
+    public void Buy_NotEnoughFunds_Throws(){
+        Shop shop = new Shop();
+        Item item = new Item("Black Short", 15);
+        ItemBatch batch = new ItemBatch(item, 11);
+        
     }
 }
