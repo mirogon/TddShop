@@ -46,7 +46,7 @@ public class ShopTest {
         assertEquals(0, shop.Revenue());
     }
     @Test
-    public void Buy_ReducesFunds(){
+    public void Buy_ReducesFunds() throws NotEnoughFundsException{
         Shop shop = new Shop();
         Item item = new Item("Black Shirt", 15);
         ItemBatch batch = new ItemBatch(item, 25);
@@ -61,11 +61,15 @@ public class ShopTest {
         assertEquals(85, wallet.Funds);
         assertEquals(24, shop.StockAvailable("Black Shirt"));
     }
-    @Test
-    public void Buy_NotEnoughFunds_Throws(){
+    @Test(expected = NotEnoughFundsException.class)
+    public void Buy_NotEnoughFunds_Throws() throws NotEnoughFundsException {
         Shop shop = new Shop();
-        Item item = new Item("Black Short", 15);
+        Item item = new Item("Black Shirt", 15);
         ItemBatch batch = new ItemBatch(item, 11);
-        
+
+        shop.Add(batch);
+
+        Wallet w = new Wallet(10);
+        shop.Buy("Black Shirt", w);
     }
 }

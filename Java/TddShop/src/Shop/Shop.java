@@ -8,6 +8,8 @@ import java.util.List;
 
 import Customer.Wallet;
 
+class NotEnoughFundsException extends Exception{
+}
 public class Shop {
     private List<ItemBatch> items;
     public Shop(){
@@ -33,12 +35,15 @@ public class Shop {
         }
         return 0;
     }
-    public void Buy(String itemName, Wallet wallet){
+    public void Buy(String itemName, Wallet wallet) throws NotEnoughFundsException {
         for(int i = 0; i < items.size(); ++i){
             if(items.get(i).Item().Name() == itemName){
                 if(wallet.Funds >= items.get(i).Item().Value()){
                     items.get(i).Stock--;
                     wallet.Funds -= items.get(i).Item().Value();
+                }
+                else{
+                    throw new NotEnoughFundsException();
                 }
             }
         }
