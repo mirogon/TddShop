@@ -8,8 +8,8 @@ import java.util.List;
 
 import Customer.Wallet;
 
-class NotEnoughFundsException extends Exception{
-}
+class NotEnoughFundsException extends Exception{}
+class ItemNotAvailableException extends Exception{}
 public class Shop {
     private List<ItemBatch> items;
     public Shop(){
@@ -35,17 +35,28 @@ public class Shop {
         }
         return 0;
     }
-    public void Buy(String itemName, Wallet wallet) throws NotEnoughFundsException {
+    public void DecrementStock(int itemIndex){
+        --items.get(itemIndex).Stock;
+        if(items.get(itemIndex).Stock <= 0){
+            items.remove(itemIndex);
+        }
+    }
+    public void Buy(String itemName, Wallet wallet) throws NotEnoughFundsException, ItemNotAvailableException {
+        boolean found = false;
         for(int i = 0; i < items.size(); ++i){
             if(items.get(i).Item().Name() == itemName){
+                found = true;
                 if(wallet.Funds >= items.get(i).Item().Value()){
-                    items.get(i).Stock--;
                     wallet.Funds -= items.get(i).Item().Value();
+                    DecrementStock(i);
                 }
                 else{
                     throw new NotEnoughFundsException();
                 }
             }
+        }
+        if(!found){
+            throw new ItemNotAvailableException();
         }
     }
     public int Revenue(){
