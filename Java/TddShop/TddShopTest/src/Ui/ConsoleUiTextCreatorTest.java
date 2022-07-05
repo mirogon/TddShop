@@ -1,5 +1,6 @@
 package Ui;
 
+import Customer.Customer;
 import org.junit.Assert;
 import org.junit.Test;
 import static org.junit.Assert.assertEquals;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import Item.*;
+import Shop.*;
+import Customer.Wallet;
 
 class ConsoleUiTextCreatorTestHelper{
     public static String LoadFromFile(String fileName) throws FileNotFoundException, IOException {
@@ -49,5 +52,35 @@ public class ConsoleUiTextCreatorTest {
         String result = textCreator.ConstructShopMenu(items);
         String expected = ConsoleUiTextCreatorTestHelper.LoadFromFile("ConstructShopMenu1");
         assertEquals(expected,result);
+    }
+    @Test
+    public void ConstructCustomerMenu_WithItem() throws NotEnoughFundsException, CannotReturnException, ItemNotAvailableException, IOException {
+        ConsoleUiTextCreator textCreator = new ConsoleUiTextCreator();
+
+        Shop shop = new Shop();
+        ItemBatch itemBatch = new ItemBatch(new Item("Black Shirt", 15), 2);
+        shop.Add(itemBatch);
+
+        Customer customer = new Customer(new Wallet(1000));
+        customer.Buy(shop, "Black Shirt");
+        customer.Buy(shop, "Black Shirt");
+
+        String expected = ConsoleUiTextCreatorTestHelper.LoadFromFile("ConstructCustomerMenu");
+        String actual = textCreator.ConstructCustomerMenu(customer);
+        assertEquals(expected, actual);
+    }
+    @Test
+    public void ConstructCustomerBuyMenu() throws IOException {
+        ConsoleUiTextCreator textCreator = new ConsoleUiTextCreator();
+
+        Shop shop = new Shop();
+
+        Item i = new Item("Red Shoes", 15);
+        ItemBatch batch = new ItemBatch(i, 1);
+        shop.Add(batch);
+
+        String expected = ConsoleUiTextCreatorTestHelper.LoadFromFile("ConstructCustomerBuyMenu");
+        String actual = textCreator.ConstructCustomerBuyMenu(shop.Items());
+        assertEquals(expected, actual);
     }
 }

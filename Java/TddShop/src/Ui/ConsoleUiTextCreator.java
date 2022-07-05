@@ -1,5 +1,6 @@
 package Ui;
 import Item.*;
+import Customer.*;
 
 import java.util.List;
 
@@ -28,7 +29,29 @@ public class ConsoleUiTextCreator {
                 s += " ";
             }
             s += items.get(i).Stock;
+            s += "\n";
         }
+        s+="\nUSER COMMANDS\n\n";
+        s+="BACK - Go back to the Main Menu\n\n";
+        s+="INPUT:";
         return s;
+    }
+    public String ConstructCustomerMenu(Customer c){
+        String s ="YOUR ITEMS\n\n";
+
+        for(int i = 0; i < c.Items().size(); ++i){
+            s += c.Items().get(i).Name();
+            s+="\n";
+        }
+        s += "\n";
+        s+="USER COMMANDS\n\n";
+        s+="BUY    - Buy Item\n";
+        s+="REFUND - Refund Item\n";
+        s+="BACK   - Go back to the Main Menu\n\n";
+        s+="INPUT:";
+        return s;
+    }
+    public String ConstructCustomerBuyMenu(List<ItemBatch> shopItems){
+       return "";
     }
 }

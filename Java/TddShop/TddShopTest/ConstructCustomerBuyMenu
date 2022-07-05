@@ -1,0 +1,11 @@
+SHOP ITEMS
+
+Name                Price               Stock
+Red Shoes           15                  1
+
+USER COMMANDS
+
+[ITEM]  - Buy item with the name [ITEM]
+BACK    - Go back to the Customer Menu
+
+INPUT: 
