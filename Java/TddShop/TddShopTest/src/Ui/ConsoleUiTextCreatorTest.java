@@ -83,4 +83,19 @@ public class ConsoleUiTextCreatorTest {
         String actual = textCreator.ConstructCustomerBuyMenu(shop.Items());
         assertEquals(expected, actual);
     }
+    @Test
+    public void ConstructCustomerRefundMenu() throws NotEnoughFundsException, CannotReturnException, ItemNotAvailableException, IOException {
+        ConsoleUiTextCreator textCreator = new ConsoleUiTextCreator();
+
+        Customer c = new Customer(new Wallet(1000));
+        Shop shop = new Shop();
+        Item i = new Item("Blue Pants", 60);
+        shop.Add(new ItemBatch(i, 1));;
+
+        c.Buy(shop, "Blue Pants");
+
+        String expected = ConsoleUiTextCreatorTestHelper.LoadFromFile("ConstructCustomerRefundMenu");
+        String actual = textCreator.ConstructCustomerRefundMenu(c.Items());
+        assertEquals(expected, actual);
+    }
 }

@@ -52,6 +52,47 @@ public class ConsoleUiTextCreator {
         return s;
     }
     public String ConstructCustomerBuyMenu(List<ItemBatch> shopItems){
-       return "";
+        String s = "SHOP ITEMS\n\n";
+        s += "Name                Price               Stock\n";
+
+        for(int i = 0; i < shopItems.size(); ++i){
+            int spaces = 20 - shopItems.get(i).Item().Name().length();
+            s += shopItems.get(i).Item().Name();
+            for(int j = 0; j < spaces; ++j){
+                s += " ";
+            }
+            String itemValue = "" + shopItems.get(i).Item().Value();
+            spaces = 20 - itemValue.length();
+            s += itemValue;
+            for(int j = 0; j < spaces; ++j){
+                s += " ";
+            }
+            s += shopItems.get(i).Stock;
+            s += "\n";
+        }
+        s += "\n";
+        s += "USER COMMANDS\n\n";
+        s+= "[ITEM]  - Buy item with the name [ITEM]\n";
+        s+= "BACK    - Go back to the Customer Menu\n\n";
+        s+="INPUT:";
+
+        return s;
+    }
+    public String ConstructCustomerRefundMenu(List<Item> customerItems){
+        String s = "YOUR ITEMS\n\n";
+        s += "Name                Value\n";
+        for(int i = 0; i < customerItems.size(); ++i){
+            int spaces = 20 - customerItems.get(i).Name().length();
+            s += customerItems.get(i).Name();
+            for(int j = 0; j < spaces; ++j){
+                s += " ";
+            }
+            s += customerItems.get(i).Value();
+            s+="\n";
+        }
+        s+="\nUSER COMMANDS\n\n";
+        s+="[ITEM] - Refund item with [ITEM] name\nBACK   - Go back to the Customer Menu\n\n";
+        s+="INPUT:";
+        return s;
     }
 }
