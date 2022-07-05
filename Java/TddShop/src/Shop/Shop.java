@@ -8,12 +8,13 @@ import java.util.List;
 
 import Customer.Wallet;
 
-class NotEnoughFundsException extends Exception{}
-class ItemNotAvailableException extends Exception{}
 public class Shop {
     private List<ItemBatch> items;
+    private List<Item> soldItems;
+    private int revenue = 0;
     public Shop(){
         items = new ArrayList<ItemBatch>();
+        soldItems = new ArrayList<Item>();
     }
     public void Add(ItemBatch b){
         for(int i = 0; i < items.size(); ++i){
@@ -41,25 +42,51 @@ public class Shop {
             items.remove(itemIndex);
         }
     }
-    public void Buy(String itemName, Wallet wallet) throws NotEnoughFundsException, ItemNotAvailableException {
+    public Item Buy(String itemName, Wallet wallet) throws NotEnoughFundsException, ItemNotAvailableException {
         boolean found = false;
         for(int i = 0; i < items.size(); ++i){
             if(items.get(i).Item().Name() == itemName){
                 found = true;
                 if(wallet.Funds >= items.get(i).Item().Value()){
+                    Item item = items.get(i).Item();
                     wallet.Funds -= items.get(i).Item().Value();
+                    revenue += items.get(i).Item().Value();
+                    soldItems.add(item);
                     DecrementStock(i);
+                    return item;
                 }
                 else{
                     throw new NotEnoughFundsException();
                 }
             }
         }
-        if(!found){
-            throw new ItemNotAvailableException();
+        throw new ItemNotAvailableException();
+    }
+    public void Return(Item item) throws CannotReturnException{
+        boolean found = false;
+        for(int i = 0; i < soldItems.size(); ++i){
+            if(soldItems.get(i).Name() == item.Name()){
+                found = true;
+                soldItems.remove(i);
+            }
         }
+        if(!found){
+            throw new CannotReturnException();
+        }
+        found = false;
+        for(int i = 0; i < items.size(); ++i){
+            if(items.get(i).Item().Name() == item.Name()){
+                items.get(i).Stock++;
+                found = true;
+            }
+        }
+        if(!found){
+            ItemBatch b = new ItemBatch(item, 1);
+            items.add(b);
+        }
+        revenue -= item.Value();
     }
     public int Revenue(){
-        return 0;
+        return revenue;
     }
 }

@@ -9,6 +9,8 @@ import org.junit.Test;
 import static org.junit.Assert.assertEquals;
 import org.junit.Assert;
 
+import javax.xml.crypto.dsig.CanonicalizationMethod;
+
 public class ShopTest {
     @Test
     public void AddItem_AddsItem(){
@@ -93,5 +95,69 @@ public class ShopTest {
         shop.Buy("Yellow Shoes", w);
 
         Assert.assertEquals(0, shop.Items().size());
+    }
+    @Test
+    public void Revenue_AfterPurchase_Correct() throws NotEnoughFundsException, ItemNotAvailableException{
+        Shop shop = new Shop();
+        Item item = new Item("Black Shirt",15);
+        Item item2 = new Item("Yellow Shoes", 55);
+
+        ItemBatch shirtBatch = new ItemBatch(item, 100);
+        ItemBatch shoeBatch = new ItemBatch(item2, 150);
+
+        shop.Add(shirtBatch);
+        shop.Add(shoeBatch);
+
+        assertEquals(0, shop.Revenue());
+
+        Wallet w = new Wallet(1000);
+        shop.Buy("Black Shirt", w);
+
+        assertEquals(item.Value(), shop.Revenue());
+
+        shop.Buy("Yellow Shoes", w);
+        assertEquals(item.Value() + item2.Value(), shop.Revenue());
+    }
+    @Test
+    public void Return_ReturnsItemAndRevenue() throws NotEnoughFundsException, ItemNotAvailableException, CannotReturnException {
+        Shop shop = new Shop();
+        Item i = new Item("Black Shirt", 15);
+        ItemBatch batch = new ItemBatch(i, 1);
+
+        shop.Add(batch);
+
+        assertEquals(1, shop.Items().size());
+
+        Wallet wallet = new Wallet(1000);
+        Item boughtItem = shop.Buy("Black Shirt", wallet);
+        assertEquals(0, shop.Items().size());
+        assertEquals(i.Value(), shop.Revenue());
+
+        shop.Return(boughtItem);
+
+        assertEquals(1, shop.Items().size());
+        assertEquals(0, shop.Revenue());
+    }
+    @Test
+    public void Return_WhenBoughtBefore_Works() throws NotEnoughFundsException, ItemNotAvailableException, CannotReturnException{
+        Shop shop = new Shop();
+        Item i = new Item("Black Shirt", 15);
+        ItemBatch batch = new ItemBatch(i,1);
+
+        shop.Add(batch);
+
+        Wallet w = new Wallet(1000);
+        Item boughtItem = shop.Buy("Black Shirt", w);
+        shop.Return(boughtItem);
+    }
+    @Test(expected = CannotReturnException.class)
+    public void Return_WhenNotBoughtBefore_Throws() throws CannotReturnException{
+        Shop shop = new Shop();
+        Item i = new Item("Black Shirt", 15);
+        ItemBatch batch = new ItemBatch(i,1);
+
+        shop.Add(batch);
+
+        shop.Return(i);
     }
 }
