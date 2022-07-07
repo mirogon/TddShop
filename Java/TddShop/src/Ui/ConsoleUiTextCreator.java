@@ -4,7 +4,7 @@ import Customer.*;
 
 import java.util.List;
 
-public class ConsoleUiTextCreator {
+public class ConsoleUiTextCreator implements UiTextCreator {
     public String ConstructMainMenu(){
         String s ="USER COMMANDS\n\n";
         s += "SHOP     - Shop Menu\n";
