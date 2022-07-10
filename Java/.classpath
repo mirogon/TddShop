@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER">
+		<attributes>
+			<attribute name="module" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="TddShop_OLD/src"/>
+	<classpathentry kind="src" path="TddShop_OLD/TddShopTest/src"/>
+	<classpathentry kind="output" path="TddShop_OLD/out/production/TddShop"/>
+</classpath>

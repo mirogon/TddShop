@@ -19,8 +19,8 @@ public class ConsoleUiTest {
 
         String actual = ui.MainMenu();
 
-        verify(textCreatorMock.ConstructMainMenu());
-        verify(consoleInputMock.ReadLine());
+        verify(textCreatorMock).ConstructMainMenu();
+        verify(consoleInputMock).ReadLine();
         assertEquals("1", actual);
     }
 }

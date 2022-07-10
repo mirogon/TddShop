@@ -9,6 +9,42 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="TddShop" />
     <orderEntry type="library" name="junit-4.10" level="project" />
-    <orderEntry type="library" name="mockito-core-4.6.1" level="project" />
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../Java/Lib/Mockito/mockito-core-4.6.1.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../Java/Lib/Mockito/byte-buddy-1.12.12.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../Java/Lib/Mockito/byte-buddy-agent-1.12.12.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../../../../Java/Lib/Mockito/byte-buddy-dep-1.12.12.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="library" name="objenesis-3.2" level="project" />
   </component>
 </module>
