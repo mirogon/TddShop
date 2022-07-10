@@ -72,4 +72,15 @@ public class ConsoleUiTest {
         verify(textCreatorMock).ConstructCustomerBuyMenu(items);
         verify(consoleInputMock).ReadLine();
     }
+    @Test
+    public void CustomerRefundMenu_CallsConstructCustomerRefundMenu(){
+        UiTextCreator textCreatorMock = mock(UiTextCreator.class);
+        ConsoleInput consoleInputMock = mock(ConsoleInput.class);
+        Ui ui = new ConsoleUi(textCreatorMock, consoleInputMock);
+
+        String input = ui.CustomerRefundMenu(new ArrayList<Item>());
+
+        verify(textCreatorMock).ConstructCustomerRefundMenu(new ArrayList<Item>());
+        verify(consoleInputMock).ReadLine();
+    }
 }

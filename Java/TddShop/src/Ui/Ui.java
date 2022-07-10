@@ -9,4 +9,5 @@ public interface Ui {
     public String ShopMenu(List<ItemBatch> itemBatches);
     public String CustomerMenu(Customer c);
     public String CustomerBuyMenu(List<ItemBatch> items);
+    public String CustomerRefundMenu(List<Item> items);
 }

@@ -1,6 +1,7 @@
 package Ui;
 
 import Customer.Customer;
+import Item.Item;
 import Item.ItemBatch;
 
 import java.util.List;
@@ -32,6 +33,12 @@ public class ConsoleUi implements Ui{
     }
     public String CustomerBuyMenu(List<ItemBatch> items){
         String menuText = textCreator.ConstructCustomerBuyMenu(items);
+        System.out.print(menuText);
+        String input = consoleInput.ReadLine();
+        return input;
+    }
+    public String CustomerRefundMenu(List<Item> items){
+        String menuText = textCreator.ConstructCustomerRefundMenu(items);
         System.out.print(menuText);
         String input = consoleInput.ReadLine();
         return input;
