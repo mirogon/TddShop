@@ -38,41 +38,42 @@ public class App {
         String input = "";
         if(appState == AppState.MainMenu){
             input = ui.MainMenu();
-            if(input == "Shop"){
+            if(input.equalsIgnoreCase("Shop")){
                 appState = AppState.ShopMenu;
+                System.out.println("Changing appState");
             }
-            if(input == "Customer"){
+            if(input.equalsIgnoreCase("Customer")){
                appState = AppState.CustomerMenu;
             }
-            if(input == "Exit"){
+            if(input.equalsIgnoreCase("Exit")){
                 appState = AppState.Exit;
                 running = false;
             }
         }
         else if(appState == AppState.ShopMenu){
             input = ui.ShopMenu(shop.Items());
-            if(input == "Back"){
+            if(input.equalsIgnoreCase("Back")){
                 appState = AppState.MainMenu;
             }
         }
         else if(appState == AppState.CustomerMenu){
             input = ui.CustomerMenu(customer);
-            if(input == "Back"){
+            if(input.equalsIgnoreCase("Back")){
                 appState = AppState.MainMenu;
             }
-            else if(input =="Buy"){
+            else if(input.equalsIgnoreCase("Buy")){
                 appState = AppState.CustomerBuyMenu;
             }
-            else if(input == "Refund"){
+            else if(input.equalsIgnoreCase("Refund")){
                 appState = AppState.CustomerRefundMenu;
             }
         }
         else if(appState == AppState.CustomerBuyMenu){
             input = ui.CustomerBuyMenu(shop.Items());
-            if(input == ""){
+            if(input.equalsIgnoreCase("")){
                 return;
             }
-            if(input == "Back"){
+            if(input.equalsIgnoreCase("Back")){
                 appState = AppState.CustomerMenu;
             }
             else{
@@ -81,12 +82,12 @@ public class App {
         }
         else if(appState == AppState.CustomerRefundMenu){
             input = ui.CustomerRefundMenu(customer.Items());
-            if(input == "Back"){
+            if(input.equalsIgnoreCase("Back")){
                 appState = AppState.CustomerMenu;
             }
             else{
                 for(int i = 0; i < customer.Items().size(); ++i){
-                    if(customer.Items().get(i).Name() == input){
+                    if(customer.Items().get(i).Name().equalsIgnoreCase(input)){
                         customer.Return(shop, customer.Items().get(i));
                     }
                 }

@@ -18,7 +18,7 @@ public class Shop {
     }
     public void Add(ItemBatch b){
         for(int i = 0; i < items.size(); ++i){
-            if(items.get(i).Item().Name() == b.Item().Name()){
+            if(items.get(i).Item().Name().equalsIgnoreCase(b.Item().Name())){
                 items.get(i).Stock += b.Stock;
                 return;
             }
@@ -30,7 +30,7 @@ public class Shop {
     }
     public int StockAvailable(String itemname){
         for(int i = 0; i < items.size(); ++i){
-            if(itemname == items.get(i).Item().Name()){
+            if(itemname.equalsIgnoreCase(items.get(i).Item().Name())){
                 return items.get(i).Stock;
             }
         }
@@ -45,7 +45,7 @@ public class Shop {
     public Item Buy(String itemName, Wallet wallet) throws NotEnoughFundsException, ItemNotAvailableException {
         boolean found = false;
         for(int i = 0; i < items.size(); ++i){
-            if(items.get(i).Item().Name() == itemName){
+            if(items.get(i).Item().Name().equalsIgnoreCase(itemName)){
                 found = true;
                 if(wallet.Funds >= items.get(i).Item().Value()){
                     Item item = items.get(i).Item();
@@ -65,7 +65,7 @@ public class Shop {
     public void Return(Item item) throws CannotReturnException{
         boolean found = false;
         for(int i = 0; i < soldItems.size(); ++i){
-            if(soldItems.get(i).Name() == item.Name()){
+            if(soldItems.get(i).Name().equalsIgnoreCase(item.Name())){
                 found = true;
                 soldItems.remove(i);
             }
@@ -75,7 +75,7 @@ public class Shop {
         }
         found = false;
         for(int i = 0; i < items.size(); ++i){
-            if(items.get(i).Item().Name() == item.Name()){
+            if(items.get(i).Item().Name().equalsIgnoreCase(item.Name())){
                 items.get(i).Stock++;
                 found = true;
             }

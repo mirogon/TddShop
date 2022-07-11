@@ -18,6 +18,8 @@ public class AppTest {
         Shop shop = new Shop();
         Ui uiMock = mock(Ui.class);
 
+        when(uiMock.MainMenu()).thenReturn("");
+
         App app = new App(uiMock, c, shop);
 
         app.Update();
@@ -31,6 +33,7 @@ public class AppTest {
         Ui uiMock = mock(Ui.class);
 
         when(uiMock.MainMenu()).thenReturn("Shop");
+        when(uiMock.ShopMenu(any())).thenReturn("");
 
         App app = new App(uiMock, c, shop);
 
@@ -51,6 +54,7 @@ public class AppTest {
         Ui uiMock = mock(Ui.class);
 
         when(uiMock.MainMenu()).thenReturn("Customer");
+        when(uiMock.CustomerMenu(any())).thenReturn("");
 
         App app = new App(uiMock, c, shop);
 
@@ -150,6 +154,7 @@ public class AppTest {
 
         when(uiMock.MainMenu()).thenReturn("Customer");
         when(uiMock.CustomerMenu(any())).thenReturn("Refund");
+        when(uiMock.CustomerRefundMenu(any())).thenReturn("");
 
         App app = new App(uiMock, customer, shop);
 
