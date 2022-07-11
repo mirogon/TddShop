@@ -13,7 +13,7 @@ import Ui.*;
 
 public class AppTest {
     @Test
-    public void Start_ShowsMainMenu(){
+    public void Start_ShowsMainMenu() throws NotEnoughFundsException, CannotReturnException, ItemNotAvailableException {
         Customer c = new Customer(new Wallet(1000));
         Shop shop = new Shop();
         Ui uiMock = mock(Ui.class);
@@ -25,7 +25,7 @@ public class AppTest {
         verify(uiMock).MainMenu();
     }
     @Test
-    public void MainMenu_WithShopInput_CallsShopMenu(){
+    public void MainMenu_WithShopInput_CallsShopMenu() throws NotEnoughFundsException, CannotReturnException, ItemNotAvailableException {
         Customer c = new Customer(new Wallet(1000));
         Shop shop = new Shop();
         Ui uiMock = mock(Ui.class);
@@ -45,7 +45,7 @@ public class AppTest {
         verify(uiMock).ShopMenu(shop.Items());
     }
     @Test
-    public void MainMenu_WithCustomerInput_CallsCustomerMenu(){
+    public void MainMenu_WithCustomerInput_CallsCustomerMenu() throws NotEnoughFundsException, CannotReturnException, ItemNotAvailableException {
         Customer c = new Customer(new Wallet(1000));
         Shop shop = new Shop();
         Ui uiMock = mock(Ui.class);
@@ -61,7 +61,7 @@ public class AppTest {
         verify(uiMock).CustomerMenu(c);
     }
     @Test
-    public void MainMenu_WithExitInput_Exits(){
+    public void MainMenu_WithExitInput_Exits() throws NotEnoughFundsException, CannotReturnException, ItemNotAvailableException {
         Customer c = new Customer(new Wallet(1000));
         Shop shop = new Shop();
         Ui uiMock = mock(Ui.class);
@@ -79,7 +79,7 @@ public class AppTest {
         verify(uiMock).MainMenu();
     }
     @Test
-    public void ShopMenu_Back_ReturnsToMainMenu(){
+    public void ShopMenu_Back_ReturnsToMainMenu() throws NotEnoughFundsException, CannotReturnException, ItemNotAvailableException {
         Customer customer = new Customer(new Wallet(1000));
         Shop shop = new Shop();
         Ui uiMock = mock(Ui.class);
@@ -103,7 +103,7 @@ public class AppTest {
         verify(uiMock, times(2)).MainMenu();
     }
     @Test
-    public void CustomerMenu_WithBackInput_ReturnsToMainMenu(){
+    public void CustomerMenu_WithBackInput_ReturnsToMainMenu() throws NotEnoughFundsException, CannotReturnException, ItemNotAvailableException {
         Customer customer = new Customer(new Wallet(1000));
         Shop shop = new Shop();
         Ui uiMock = mock(Ui.class);
@@ -124,13 +124,14 @@ public class AppTest {
         verify(uiMock, times(2)).MainMenu();
     }
     @Test
-    public void CustomerMenu_WithBuyInput_GoesToCustomerBuyMenu(){
+    public void CustomerMenu_WithBuyInput_GoesToCustomerBuyMenu() throws NotEnoughFundsException, CannotReturnException, ItemNotAvailableException {
         Customer customer = new Customer(new Wallet(1000));
         Shop shop = new Shop();
         Ui uiMock = mock(Ui.class);
 
         when(uiMock.MainMenu()).thenReturn("Customer");
         when(uiMock.CustomerMenu(any())).thenReturn("Buy");
+        when(uiMock.CustomerBuyMenu(any())).thenReturn("");
 
         App app = new App(uiMock, customer, shop);
 
@@ -140,6 +141,130 @@ public class AppTest {
         verify(uiMock).CustomerMenu(customer);
         app.Update();
         verify(uiMock).CustomerBuyMenu(any());
+    }
+    @Test
+    public void CustomerMenu_WithRefundInput_GoesToCustomerRefundMenu() throws NotEnoughFundsException, CannotReturnException, ItemNotAvailableException {
+        Customer customer = new Customer(new Wallet(1000));
+        Shop shop = new Shop();
+        Ui uiMock = mock(Ui.class);
+
+        when(uiMock.MainMenu()).thenReturn("Customer");
+        when(uiMock.CustomerMenu(any())).thenReturn("Refund");
+
+        App app = new App(uiMock, customer, shop);
+
+        app.Update();
+
+        verify(uiMock).MainMenu();
+        app.Update();
+
+        verify(uiMock).CustomerMenu(customer);
+        app.Update();
+
+        verify(uiMock).CustomerRefundMenu(any());
+    }
+    @Test
+    public void CustomerBuyMenu_WithBackInput_ReturnsToCustomerMenu() throws NotEnoughFundsException, CannotReturnException, ItemNotAvailableException {
+        Customer customer = new Customer(new Wallet(1000));
+        Shop shop = new Shop();
+        Ui uiMock = mock(Ui.class);
+
+        when(uiMock.MainMenu()).thenReturn("Customer");
+        when(uiMock.CustomerMenu(any())).thenReturn("Buy");
+        when(uiMock.CustomerBuyMenu(any())).thenReturn("Back");
+
+        App app = new App(uiMock, customer, shop);
+
+        app.Update();
+        verify(uiMock).MainMenu();
+
+        app.Update();
+        verify(uiMock).CustomerMenu(customer);
+
+        app.Update();
+        verify(uiMock).CustomerBuyMenu(any());
+
+        app.Update();
+        verify(uiMock, times(2)).CustomerMenu(customer);
+    }
+    @Test
+    public void CustomerBuyMenu_WithBuyInput_Buys() throws NotEnoughFundsException, CannotReturnException, ItemNotAvailableException {
+        Customer customer = new Customer(new Wallet(1000));
+        Shop shop = new Shop();
+        Ui uiMock = mock(Ui.class);
+
+        Item redShoes = new Item("Red Shoes", 100);
+        ItemBatch batch = new ItemBatch(redShoes, 1);
+        shop.Add(batch);
+
+        when(uiMock.MainMenu()).thenReturn("Customer");
+        when(uiMock.CustomerMenu(any())).thenReturn("Buy");
+        when(uiMock.CustomerBuyMenu(any())).thenReturn("Red Shoes");
+
+        App app = new App(uiMock, customer, shop);
+
+        assertEquals(1, shop.Items().size());
+        assertEquals(0, customer.Items().size());
+
+        app.Update();
+        app.Update();
+        app.Update();
+
+        assertEquals(0, shop.Items().size());
+        assertEquals(1, customer.Items().size());
+    }
+    @Test
+    public void CustomerRefundMenu_WithBackInput_ReturnsToCustomerMenu() throws NotEnoughFundsException, CannotReturnException, ItemNotAvailableException {
+        Customer customer = new Customer(new Wallet(1000));
+        Shop shop = new Shop();
+        Ui uiMock = mock(Ui.class);
+
+        when(uiMock.MainMenu()).thenReturn("Customer");
+        when(uiMock.CustomerMenu(any())).thenReturn("Refund");
+        when(uiMock.CustomerRefundMenu(any())).thenReturn("Back");
+
+        App app = new App(uiMock, customer, shop);
+
+        app.Update();
+        verify(uiMock).MainMenu();
+
+        app.Update();
+        verify(uiMock).CustomerMenu(customer);
+
+        app.Update();
+        verify(uiMock).CustomerRefundMenu(any());
+
+        app.Update();
+        verify(uiMock, times(2)).CustomerMenu(any());
+    }
+    @Test
+    public void CustomerRefundMenu_WithRefundInput_RefundsItem() throws NotEnoughFundsException, CannotReturnException, ItemNotAvailableException {
+        Customer customer = new Customer(new Wallet(1000));
+        Shop shop = new Shop();
+        Ui uiMock = mock(Ui.class);
+
+        Item redShoes = new Item("Red Shoes", 100);
+        ItemBatch batch = new ItemBatch(redShoes, 1);
+        shop.Add(batch);
+
+        customer.Buy(shop, "Red Shoes");
+
+        when(uiMock.MainMenu()).thenReturn("Customer");
+        when(uiMock.CustomerMenu(any())).thenReturn("Refund");
+        when(uiMock.CustomerRefundMenu(any())).thenReturn("Red Shoes");
+
+        App app = new App(uiMock, customer ,shop);
+
+        assertEquals(0, shop.Items().size());
+        assertEquals(1, customer.Items().size());
+
+        app.Update();
+        app.Update();
+        app.Update();
+
+        assertEquals(1, shop.Items().size());
+        assertEquals(0, customer.Items().size());
+
     }
 
 }

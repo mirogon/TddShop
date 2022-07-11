@@ -9,7 +9,8 @@ enum AppState{
     MainMenu,
     ShopMenu,
     CustomerMenu,
-    CustomerBuyMenu
+    CustomerBuyMenu,
+    CustomerRefundMenu
 }
 
 public class App {
@@ -33,8 +34,7 @@ public class App {
     public boolean Running(){
         return running;
     }
-    public void Update(){
-
+    public void Update() throws NotEnoughFundsException, CannotReturnException, ItemNotAvailableException {
         String input = "";
         if(appState == AppState.MainMenu){
             input = ui.MainMenu();
@@ -63,9 +63,34 @@ public class App {
             else if(input =="Buy"){
                 appState = AppState.CustomerBuyMenu;
             }
+            else if(input == "Refund"){
+                appState = AppState.CustomerRefundMenu;
+            }
         }
         else if(appState == AppState.CustomerBuyMenu){
             input = ui.CustomerBuyMenu(shop.Items());
+            if(input == ""){
+                return;
+            }
+            if(input == "Back"){
+                appState = AppState.CustomerMenu;
+            }
+            else{
+                customer.Buy(shop, input);
+            }
+        }
+        else if(appState == AppState.CustomerRefundMenu){
+            input = ui.CustomerRefundMenu(customer.Items());
+            if(input == "Back"){
+                appState = AppState.CustomerMenu;
+            }
+            else{
+                for(int i = 0; i < customer.Items().size(); ++i){
+                    if(customer.Items().get(i).Name() == input){
+                        customer.Return(shop, customer.Items().get(i));
+                    }
+                }
+            }
         }
     }
 }
