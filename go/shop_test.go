@@ -48,3 +48,46 @@ func TestAddTwoTimes_AddsStock(t *testing.T) {
 		t.Error(shop.Items)
 	}
 }
+
+func TestStockAvailable_ZeroWithoutItems(t *testing.T) {
+	shop := ts.Shop{}
+	if shop.StockAvailable("White Shoes") != 0 {
+		t.Error()
+	}
+}
+
+func TestStockAvailable_WithItems(t *testing.T) {
+	shop := ts.Shop{}
+	itemBatch := ts.ItemBatch{Item: ts.Item{Name: "White Shoes", Price: 100}, Quantity: 11}
+	shop.Add(itemBatch)
+
+	if shop.StockAvailable("White Shoes") != 11 {
+		t.Error()
+	}
+}
+
+func TestRevenue_AtBegin_Zero(t *testing.T) {
+	shop := ts.Shop{}
+	if shop.Revenue != 0 {
+		t.Error()
+	}
+}
+
+func TestBuy_ReducesFundsAndStock(t *testing.T) {
+	shop := ts.Shop{}
+	item := ts.Item{Name: "Black Belt", Price: 10}
+	itemBatch := ts.ItemBatch{Item: item, Quantity: 7}
+
+	shop.Add(itemBatch)
+
+	if shop.StockAvailable("Black Belt") != 7 || shop.Revenue != 0 {
+		t.Error()
+	}
+
+	funds := 100
+	shop.Buy("Black Belt", &funds)
+
+	if shop.StockAvailable("Black Belt") != 6 || shop.Revenue != 10 || funds != 90 {
+		t.Error()
+	}
+}
